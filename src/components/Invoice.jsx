@@ -34,8 +34,19 @@ function Invoice(props) {
             <div className={"invoice-status-container-" + statusName}>
                 <p className="invoice-status">{usefulStatus}</p>
             </div>
+
+{/*             <div className="edit-invoice-container">
+                <EditInvoice />
+            </div> */}   {/* what the fuck */}
+
+            <div className="edit-invoice-container">
+                <div className="edit-invoice">
+                    
+                </div>
+            </div>
+
         </div>
     )
 }
 
-export default Invoice;
+export default Invoice; 

@@ -22,6 +22,21 @@ function Invoices(props) {
 
     return (
         <div className="invoices-container">
+            <div className="invoices-top-panel">
+                <div className="invoice-counter">
+                    <h1>Invoices</h1>
+                    <p>You have {props.invoices.length} invoices</p>
+                </div>
+
+                <div className="invoice-filter">
+
+                </div>
+
+                <div className="add-invoice">
+
+                </div>
+            </div>
+
             <div className="invoices">
                 {
                     props.invoices.map(invoice => 

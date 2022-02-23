@@ -9,6 +9,20 @@ $text-color-secondary-light: #9c9c9c;
 //dimentions
 $content-width-percent-desktop: 70%;
 $height-invoice-desktop: 4rem;
+$width-invoice-client: 9rem;
+$width-invoice-number: 6rem;
+$width-invoice-date: 8rem;
+$width-invoice-amount: 6rem;
+$width-invoice-status: 4.8rem;
+$invoice-padding: 1rem;
+$edit-invoice-total-width: 4rem;
+$width-content-invoices: $width-invoice-client 
+    + $width-invoice-number 
+    + $width-invoice-date 
+    + $width-invoice-amount 
+    + $width-invoice-status
+    + $invoice-padding * 2 //careful, this is sass-only
+    + $edit-invoice-total-width;
 
 //shapes
 $main-content-items-radius: .5rem;

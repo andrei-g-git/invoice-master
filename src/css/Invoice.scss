@@ -4,7 +4,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 4.8rem;
+    width: $width-invoice-status;
     height: 2rem;
     border-radius: .2rem;
     background-color: $bk-color;    
@@ -17,31 +17,30 @@
 
 .invoice{
     display: flex;
-    //justify-content: space-between;
     align-items: center;
     height: $height-invoice-desktop;
-    padding: 0 1rem 0 1rem;
+    padding: 0 $invoice-padding 0 $invoice-padding;
     border-radius: $main-content-items-radius;
     background-color: $bk-invoice-dark;
 }
 
 .invoice-client{
-    width: 9rem;
+    width: $width-invoice-client;
     font-size: medium;
     color: $text-color-primary-light;
 }
 .invoice-number{
-    width: 6rem;
+    width: $width-invoice-number;
     font-size: small;
     color: $text-color-secondary-light;    
 }
 .invoice-date{
-    width: 8rem;
+    width: $width-invoice-date;
     font-size: small;
     color: $text-color-secondary-light;    
 }
 .invoice-amount{
-    width: 6rem;
+    width: $width-invoice-amount;
     font-size: large;
     color: $text-color-primary-light;    
 }
@@ -55,25 +54,18 @@
 .invoice-status-container-overdue{
     @include status-container-mixin(#ff6161, #6b1616);
 }
-// .invoice-status-container{ 
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     width: 4.8rem;
-//     height: 2rem;
-//     border-radius: .2rem;
 
-// }
-// .invoice-status{
-//     font-size: medium;
-// }
+.edit-invoice-container{
+    width: $edit-invoice-total-width;
+    display: flex;
+    flex-direction: row-reverse;
+    .edit-invoice{
+        width: $edit-invoice-total-width - 2rem;
+        height: 2rem;
+        background-image: url("../assets/edit-white.png");
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+}
 
-// .paid{
-//     background-color: green;
-// }
-// .pending{
-//     background-color: yellow;
-// }
-// .overdue{
-//     background-color: red;
-// }
+

@@ -2,8 +2,34 @@
 
 .invoices-container{
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding-top: 1rem;
 }
+
+.invoices-top-panel{
+    display: flex;
+    width: $width-content-invoices;
+}
+
+.invoice-counter{
+    justify-self: flex-end;
+    height: 4rem;
+
+    h1, p{
+        margin: 0;
+    }
+
+    h1{
+        color: $text-color-primary-light;
+    }
+
+    p{
+        color: $text-color-secondary-light;
+    }
+}
+
 .invoices{
     display: flex;
     flex-direction: column;
