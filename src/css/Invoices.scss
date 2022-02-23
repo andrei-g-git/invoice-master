@@ -1,0 +1,12 @@
+@import "Variables";
+
+.invoices-container{
+    display: flex;
+    justify-content: center;
+}
+.invoices{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    //width: $content-width-percent-desktop; //might not work with flex
+}

@@ -1,0 +1,79 @@
+@import "Variables";
+
+@mixin status-container-mixin($color, $bk-color) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 4.8rem;
+    height: 2rem;
+    border-radius: .2rem;
+    background-color: $bk-color;    
+
+    .invoice-status{
+        font-size: medium;
+        color: $color;
+    }
+}
+
+.invoice{
+    display: flex;
+    //justify-content: space-between;
+    align-items: center;
+    height: $height-invoice-desktop;
+    padding: 0 1rem 0 1rem;
+    border-radius: $main-content-items-radius;
+    background-color: $bk-invoice-dark;
+}
+
+.invoice-client{
+    width: 9rem;
+    font-size: medium;
+    color: $text-color-primary-light;
+}
+.invoice-number{
+    width: 6rem;
+    font-size: small;
+    color: $text-color-secondary-light;    
+}
+.invoice-date{
+    width: 8rem;
+    font-size: small;
+    color: $text-color-secondary-light;    
+}
+.invoice-amount{
+    width: 6rem;
+    font-size: large;
+    color: $text-color-primary-light;    
+}
+
+.invoice-status-container-paid{
+    @include status-container-mixin(#4BDBAA, #4bdbaa2f);
+}
+.invoice-status-container-pending{
+    @include status-container-mixin(#FF8F00, #FF8F002f);
+}
+.invoice-status-container-overdue{
+    @include status-container-mixin(#ff6161, #6b1616);
+}
+// .invoice-status-container{ 
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     width: 4.8rem;
+//     height: 2rem;
+//     border-radius: .2rem;
+
+// }
+// .invoice-status{
+//     font-size: medium;
+// }
+
+// .paid{
+//     background-color: green;
+// }
+// .pending{
+//     background-color: yellow;
+// }
+// .overdue{
+//     background-color: red;
+// }
