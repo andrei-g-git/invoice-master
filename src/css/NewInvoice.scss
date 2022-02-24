@@ -1,9 +1,16 @@
-.edit-invoice{
-    width: 3rem;
-    height: 2rem;
-    border: solid 1px red;
+@import "Variables";
+@import "Mixins";
+
+.new-invoice{
+    @include buttonBackgroundCommon(flex-start, 9rem, 2rem, 1.1rem, $bg-cta);
+    gap: 0.5rem;
+    padding: 0.1rem 0.3rem 0.1rem 0.3rem;    
 }
 
-.add-icon{
-    background-image: "C:/Vue-CLI-Projects/invoice/src/assets/edit-white.png";
+.add-icon{ 
+    @include standardIcon("../assets/plus-white.png", 1.8rem, 1.8rem); 
+}
+
+.new-invoice-label{
+    color: #ffffff;
 }

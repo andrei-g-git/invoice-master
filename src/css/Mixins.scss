@@ -1,0 +1,43 @@
+@import "Variables";
+
+@mixin shortTextCommon($width: 3rem, $fontSize: medium, $color: #ffffff){
+    width: $width;
+    font-size: $fontSize;
+    color: $color;      
+}
+
+@mixin responsiveDimension($xs, $sm, $md, $lg, $xl){
+    @media(min-width: map-get($breakpoints, "xs")){
+        width: $xs;
+    }
+    @media(min-width: map-get($breakpoints, "sm")){
+        width: $sm;
+    }    
+    @media(min-width: map-get($breakpoints, "md")){
+        width: $md;
+    }  
+    @media(min-width: map-get($breakpoints, "lg")){
+        width: $lg;
+    }  
+    @media(min-width: map-get($breakpoints, "xl")){
+        width: $xl;
+    }              
+}
+
+@mixin standardIcon($image, $width: 2rem, $height: 2rem){
+    width: $width;
+    height: $height;
+    background-image: url($image);
+    background-repeat: no-repeat;
+    background-size: contain; 
+}
+
+@mixin buttonBackgroundCommon($justify: flex-start, $width: 3rem, $height: 1rem, $radius: 0, $bgColor: #ffffff){
+    display: flex;
+    justify-content: $justify;
+    align-items: center;
+    width: $width;
+    height: $height;
+    border-radius: $radius;
+    background-color: $bgColor;      
+}

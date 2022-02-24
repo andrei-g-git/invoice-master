@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { createContext } from "react";
 import * as actions from "../redux/actions";
 import Invoice from "../components/Invoice";
+import NewInvoice from "../components/NewInvoice";
 import "../css/Invoices.scss";
 
 const $ = require("jquery");
@@ -28,13 +29,14 @@ function Invoices(props) {
                     <p>You have {props.invoices.length} invoices</p>
                 </div>
 
-                <div className="invoice-filter">
+                <div className="invoice-top-right">
+                    <div className="invoice-filter">
 
+                    </div>
+
+                    <NewInvoice />
                 </div>
 
-                <div className="add-invoice">
-
-                </div>
             </div>
 
             <div className="invoices">

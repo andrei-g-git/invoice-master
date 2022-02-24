@@ -1,13 +1,13 @@
-import "../css/EditInvoice.scss";
+import "../css/NewInvoice.scss";
 
 function NewInvoice() {
   return (
-    <div class="new-invoice">
+    <div className="new-invoice">
         <div className="add-icon">
 
         </div>
         <b className="new-invoice-label">
-            New Invoice
+            Add Invoice
         </b>
     </div>
   )

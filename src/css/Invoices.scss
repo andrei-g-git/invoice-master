@@ -10,23 +10,29 @@
 
 .invoices-top-panel{
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     width: $width-content-invoices;
-}
 
-.invoice-counter{
-    justify-self: flex-end;
-    height: 4rem;
+    .invoice-counter{
+        justify-self: flex-end;
+        height: 4rem;
 
-    h1, p{
-        margin: 0;
+        h1, p{
+            margin: 0;
+        }
+
+        h1{
+            color: $text-color-primary-light;
+        }
+
+        p{
+            color: $text-color-secondary-light;
+        }
     }
 
-    h1{
-        color: $text-color-primary-light;
-    }
+    .invoice-top-right{
 
-    p{
-        color: $text-color-secondary-light;
     }
 }
 

@@ -27,7 +27,7 @@ function Invoice(props) {
     return (
         <div className="invoice"
         >
-            <h4 className="invoice-client">{props.name}</h4>
+            <p className="invoice-client">{props.name}</p>
             <p className="invoice-number">{props.number}</p>
             <p className="invoice-date">{dateWithoutTime}</p>
             <h2 className="invoice-amount">€{props.amount}</h2>

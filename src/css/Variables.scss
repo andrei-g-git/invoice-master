@@ -1,7 +1,7 @@
 //colors background
 $bk-invoice-dark: #1E2139;
 $bk-main-dark: #141625;
-
+$bg-cta: #7C5DFA;
 //colors text
 $text-color-primary-light: #ffffff;
 $text-color-secondary-light: #9c9c9c;
@@ -9,7 +9,7 @@ $text-color-secondary-light: #9c9c9c;
 //dimentions
 $content-width-percent-desktop: 70%;
 $height-invoice-desktop: 4rem;
-$width-invoice-client: 9rem;
+$width-invoice-client: 14rem;
 $width-invoice-number: 6rem;
 $width-invoice-date: 8rem;
 $width-invoice-amount: 6rem;
@@ -23,6 +23,15 @@ $width-content-invoices: $width-invoice-client
     + $width-invoice-status
     + $invoice-padding * 2 //careful, this is sass-only
     + $edit-invoice-total-width;
+
+//breakpoints
+$breakpoints: (
+    "xs": 0,
+    "sm": 480px,
+    "md": 720px,
+    "lg": 960px,
+    "xl": 1280px
+);
 
 //shapes
 $main-content-items-radius: .5rem;
