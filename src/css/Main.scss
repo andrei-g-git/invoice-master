@@ -2,4 +2,8 @@
 .main{
     background-color: $bk-main-dark;
     padding-left: 15rem;
+    @media(max-width: map-get($breakpoints, "tablet")){
+        padding-left: 0;
+        padding-top: $nav-bar-height-tablet;
+    }
 }

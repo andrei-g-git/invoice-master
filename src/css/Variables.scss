@@ -9,13 +9,14 @@ $text-color-secondary-light: #9c9c9c;
 //dimentions
 $content-width-percent-desktop: 70%;
 $height-invoice-desktop: 4rem;
-$width-invoice-client: 14rem;
-$width-invoice-number: 6rem;
-$width-invoice-date: 8rem;
-$width-invoice-amount: 6rem;
+$width-invoice-client: 12rem;
+$width-invoice-number: 3.2rem;
+$width-invoice-date: 4.7rem;
+$width-invoice-amount: 3rem;
 $width-invoice-status: 4.8rem;
+$width-invoice-status-container: 9rem;
 $invoice-padding: 1rem;
-$edit-invoice-total-width: 4rem;
+$edit-invoice-total-width: 2.2rem;
 $width-content-invoices: $width-invoice-client 
     + $width-invoice-number 
     + $width-invoice-date 
@@ -23,6 +24,15 @@ $width-content-invoices: $width-invoice-client
     + $width-invoice-status
     + $invoice-padding * 2 //careful, this is sass-only
     + $edit-invoice-total-width;
+$invoice-min-width: $width-invoice-client
+    + $width-invoice-number
+    + $width-invoice-date
+    + $width-invoice-amount
+    + $width-invoice-status
+    + $edit-invoice-total-width;
+$invoice-min-width: $width-invoice-client * 1.7;
+$nav-bar-height-tablet: 3rem;
+
 
 //breakpoints
 $breakpoints: (
@@ -30,7 +40,9 @@ $breakpoints: (
     "sm": 480px,
     "md": 720px,
     "lg": 960px,
-    "xl": 1280px
+    "xl": 1280px,
+    "tablet": 960px,
+    "mobile": 720px
 );
 
 //shapes

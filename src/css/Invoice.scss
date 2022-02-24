@@ -2,64 +2,68 @@
 @import "Mixins";
 
 @mixin status-container-mixin($color, $bgColor) {
- 
+    @include invoiceElementCommon($width-invoice-status, status, center, start, end);
     @include buttonBackgroundCommon(center, $width-invoice-status, 2rem, 0.2rem, $bgColor);
 
     .invoice-status{
         font-size: medium;
         color: $color;
-    }
+    }   
 }
 
 .invoice{
-    // display: flex;
-    // align-items: center;
-    // height: $height-invoice-desktop;
-    // padding: 0 $invoice-padding 0 $invoice-padding;
+    min-width: $invoice-min-width;
     border-radius: $main-content-items-radius;
     background-color: $bk-invoice-dark;
     display: grid; 
 
-    grid-template-columns: 15rem 6rem 6rem 5rem 3rem;
-
-    @media(min-width: 1280px/* map-get($breakpoints: "xl") */){
-        grid-template-columns: $width-invoice-client $width-invoice-number $width-invoice-date $width-invoice-amount $edit-invoice-total-width - 2rem;
-    } 
-    @media(min-width: 960px/* map-get($breakpoints: "lg") */){
-        grid-template-columns: $width-invoice-client - 1rem $width-invoice-number - 1rem $width-invoice-date - 1rem $width-invoice-amount - 0.7rem $edit-invoice-total-width - 2rem;
-    }
-    @media(min-width: 720px/* map-get($breakpoints: "md") */){
-        grid-template-columns: $width-invoice-client - 2rem $width-invoice-number - 2rem $width-invoice-date - 2rem $width-invoice-amount - 1.4rem $edit-invoice-total-width - 2rem;
-    }  
+    grid-template-columns: 1rem 2.7fr 1.1fr 1.4fr 0.5fr 2fr 0.4fr 1rem;
     
     grid-template-rows: $height-invoice-desktop;
     grid-template-areas:
-        "client number date amount status edit"; 
-    justify-items: center;
+        ". client number date amount status edit ."; 
+
     align-items: center;
+
+    @media(max-width: map-get($breakpoints, "tablet")){
+        grid-template-rows: 1.5rem 2rem;
+        grid-template-columns: 1rem 3fr 1fr 1.5fr auto 1rem;
+        grid-template-areas: 
+            ". client date amount edit ."
+            ". number   .  status edit .";           
+        
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;        
+    }
+
+    @media(max-width: map-get($breakpoints, "mobile")){
+        grid-template-rows: 1.5rem 1.5rem 2rem;
+        grid-template-columns: 1rem 3fr 1fr 2fr 1rem;
+        grid-template-areas: 
+            ". client . amount ."
+            ". number . date ."
+            ". status . edit .";
+        
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
 }
 
 .invoice-client{
-    grid-area: client;
-    @include shortTextCommon(/* $width-invoice-client */auto,  large, $text-color-primary-light);
-    //@include responsiveDimension($width-invoice-client - 4rem, $width-invoice-client - 3rem, $width-invoice-client - 2rem, $width-invoice-client - 1rem, $width-invoice-client);
+    @include invoiceElementCommon($width-invoice-client, client, start, start, start);
+    @include shortTextCommon(large, $text-color-primary-light);
 }
 .invoice-number{   
-    grid-area: number;
-    @include shortTextCommon(/* $width-invoice-number */auto,  small, $text-color-secondary-light);    
-    //@include responsiveDimension($width-invoice-number - 4rem, $width-invoice-number - 3rem, $width-invoice-number - 2rem, $width-invoice-number - 1rem, $width-invoice-number);
-
+    @include invoiceElementCommon($width-invoice-number, number, start, start, start);      
+    @include shortTextCommon(small, $text-color-secondary-light);          
 }
 .invoice-date{
-    grid-area: date;
-    @include shortTextCommon(/* $width-invoice-date */auto,  small, $text-color-secondary-light);    
-    //@include responsiveDimension($width-invoice-date - 4rem, $width-invoice-date - 3rem, $width-invoice-date - 2rem, $width-invoice-date - 1rem, $width-invoice-date);
-    
+    @include invoiceElementCommon($width-invoice-date, date, start, end, start);    
+    @include shortTextCommon(small, $text-color-secondary-light);     
 }
 .invoice-amount{ 
-    grid-area: amount;
-    @include shortTextCommon(/* $width-invoice-amount */auto,  large, $text-color-primary-light);    
-    //@include responsiveDimension($width-invoice-amount - 3rem, $width-invoice-amount - 2rem, $width-invoice-amount - 1.4rem, $width-invoice-amount - 0.7rem, $width-invoice-amount);    
+    @include invoiceElementCommon($width-invoice-amount, amount, start, end, end);    
+    @include shortTextCommon(large, $text-color-primary-light);        
 }
 
 .invoice-status-container-paid{
@@ -73,17 +77,12 @@
 }
 
 .edit-invoice-container{
+    @include invoiceElementCommon($edit-invoice-total-width, edit, start, end, end);
     width: $edit-invoice-total-width;
     display: flex;
-    flex-direction: row-reverse;
     .edit-invoice{
-        // width: $edit-invoice-total-width - 2rem;
-        // height: 2rem;
-        // background-image: url("../assets/edit-white.png");
-        // background-repeat: no-repeat;
-        // background-size: contain;
-        @include standardIcon("../assets/edit-white.png", $edit-invoice-total-width - 2rem, 2rem);
-    }
+        @include standardIcon("../assets/edit-white.png", $edit-invoice-total-width, 2rem);
+    }   
 }
 
 
