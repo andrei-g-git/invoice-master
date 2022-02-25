@@ -2,7 +2,7 @@
 @import "Mixins";
 
 @mixin status-container-mixin($color, $bgColor) {
-    @include invoiceElementCommon($width-invoice-status, status, center, start, end);
+    @include invoiceElementCommon($width-invoice-status, status, center, center, start);
     @include buttonBackgroundCommon(center, $width-invoice-status, 2rem, 0.2rem, $bgColor);
 
     .invoice-status{
@@ -27,7 +27,7 @@
 
     @media(max-width: map-get($breakpoints, "tablet")){
         grid-template-rows: 1.5rem 2rem;
-        grid-template-columns: 1rem 3fr 1fr 1.5fr auto 1rem;
+        grid-template-columns: 1rem 1.3fr 1fr 0.6fr auto 1rem;
         grid-template-areas: 
             ". client date amount edit ."
             ". number   .  status edit .";           
@@ -58,11 +58,11 @@
     @include shortTextCommon(small, $text-color-secondary-light);          
 }
 .invoice-date{
-    @include invoiceElementCommon($width-invoice-date, date, start, end, start);    
+    @include invoiceElementCommon($width-invoice-date, date, start, start, end);    
     @include shortTextCommon(small, $text-color-secondary-light);     
 }
 .invoice-amount{ 
-    @include invoiceElementCommon($width-invoice-amount, amount, start, end, end);    
+    @include invoiceElementCommon($width-invoice-amount, amount, start, center, end);    
     @include shortTextCommon(large, $text-color-primary-light);        
 }
 

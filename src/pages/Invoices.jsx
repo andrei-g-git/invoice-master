@@ -3,11 +3,12 @@ import { connect } from "react-redux";
 import { createContext } from "react";
 import * as actions from "../redux/actions";
 import Invoice from "../components/Invoice";
-import NewInvoice from "../components/NewInvoice";
+//import NewInvoice from "../components/NewInvoice";
+import InvoicesTop from "../components/InvoicesTop";
 import "../css/Invoices.scss";
 
 const $ = require("jquery");
-const Context = createContext();
+//const Context = createContext();
 
 function Invoices(props) {
 
@@ -17,31 +18,19 @@ function Invoices(props) {
             type: "GET",
             success: (response) => {
                 props.loadInvoices(response);
+                props.initializeFilteredInvoices(response);
             }
         });
     }, []);
 
     return (
         <div className="invoices-container">
-            <div className="invoices-top-panel">
-                <div className="invoice-counter">
-                    <h1>Invoices</h1>
-                    <p>You have {props.invoices.length} invoices</p>
-                </div>
 
-                <div className="invoice-top-right">
-                    <div className="invoice-filter">
-
-                    </div>
-
-                    <NewInvoice />
-                </div>
-
-            </div>
+            <InvoicesTop invoiceCount={props.filteredInvoices.length} />
 
             <div className="invoices">
                 {
-                    props.invoices.map(invoice => 
+                    props.filteredInvoices.map(invoice => 
                         <Invoice 
                             key={invoice.ORD_NUM}
                             name={invoice.CUST_NAME} 
@@ -59,7 +48,8 @@ function Invoices(props) {
 
 const mapStateToProps = (state) => {
     return{
-        invoices: state.data.abridgedInvoices
+        invoices: state.data.abridgedInvoices,
+        filteredInvoices: state.data.filteredInvoices
     }
 }
 
@@ -67,6 +57,9 @@ const mapDispatchToProps = (dispatch) => {
     return{
         loadInvoices: (invoices) => {
             dispatch(actions.abridgedInvoicesLoaded(invoices));
+        },
+        initializeFilteredInvoices: (invoices) => {
+            dispatch(actions.invoicesFiltered(invoices));
         }
     }
 }

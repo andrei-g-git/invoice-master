@@ -1,0 +1,32 @@
+@import "Variables";
+@import "Mixins";
+
+.invoices-top-panel{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @include responsiveContentWidth(70%, 85%, 95%);
+
+    .invoice-counter{
+        justify-self: flex-end;
+        height: 4rem;
+
+        h1, p{
+            margin: 0;
+        }
+
+        h1{
+            color: $text-color-primary-light;
+        }
+
+        p{
+            color: $text-color-secondary-light;
+        }
+    }
+
+    .invoice-top-right{
+        display: flex;
+        align-items: center;
+    }
+}

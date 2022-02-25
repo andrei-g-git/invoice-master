@@ -7,18 +7,18 @@
     margin: 0;  
 }
 
-@mixin invoiceElementCommon($minWidth, $gridHandle, $justifySelfDesktop, $justifySelfMobile, $justifySelfTablet){
+@mixin invoiceElementCommon($minWidth, $gridHandle, $justifySelfDesktop, /* $justifySelfMobile, */ $justifySelfTablet, $justifySelfMobile){
     min-width: $minWidth;
     box-sizing: border-box;
     grid-area: $gridHandle;
     justify-self: $justifySelfDesktop;
-
+  
+    @media(max-width: map-get($breakpoints, "tablet")){ //these need to be defined in this order: 1) tablet 2)mobile (I assume '0' is xl). Probably has something to do with CASCADING style sheets. idk
+        justify-self: $justifySelfTablet;       //apparently desktop-first media queries that use MAX-width need to flow from xl -> xs. Mobile-first uses MIN-width and is vice-versa
+    }     
     @media(max-width: map-get($breakpoints, "mobile")){
         justify-self: $justifySelfMobile;
-    }   
-    @media(max-width: map-get($breakpoints, "tablet")){
-        justify-self: $justifySelfTablet;
-    }      
+    }       
 }
 
 @mixin standardIcon($image, $width: 2rem, $height: 2rem){
@@ -37,4 +37,14 @@
     height: $height;
     border-radius: $radius;
     background-color: $bgColor;      
+}
+
+@mixin responsiveContentWidth($desktop, $tables, $mobile){
+    width: $desktop;
+    @media(max-width: map-get($breakpoints, "tablet")){
+        width: $tables;
+    }
+    @media(max-width: map-get($breakpoints, "mobile")){
+        width: $mobile;
+    }  
 }

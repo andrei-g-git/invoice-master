@@ -1,4 +1,5 @@
 @import "Variables";
+@import "Mixins";
 
 .invoices-container{
     display: flex;
@@ -11,41 +12,37 @@
     width: 100%;
 }
 
-.invoices-top-panel{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: $width-content-invoices;
+// .invoices-top-panel{
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+//     width: $width-content-invoices;
 
-    .invoice-counter{
-        justify-self: flex-end;
-        height: 4rem;
+//     .invoice-counter{
+//         justify-self: flex-end;
+//         height: 4rem;
 
-        h1, p{
-            margin: 0;
-        }
+//         h1, p{
+//             margin: 0;
+//         }
 
-        h1{
-            color: $text-color-primary-light;
-        }
+//         h1{
+//             color: $text-color-primary-light;
+//         }
 
-        p{
-            color: $text-color-secondary-light;
-        }
-    }
+//         p{
+//             color: $text-color-secondary-light;
+//         }
+//     }
 
-    .invoice-top-right{
+//     .invoice-top-right{
 
-    }
-}
+//     }
+// }
 
 .invoices{
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    //width: $content-width-percent-desktop; //might not work with flex
-    width: 70%;
-    @media(max-width: map-get($breakpoints, "tablet")){
-        width: 85%;
-    }
+    @include responsiveContentWidth(70%, 85%, 95%);   
 }

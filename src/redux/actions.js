@@ -7,6 +7,14 @@ function abridgedInvoicesLoaded(invoices){
     }
 }
 
+function invoicesFiltered(filteredInvoices){
+    return{
+        type: actionTypes.INVOICES_FILTERED,
+        payload: filteredInvoices
+    }
+}
+
 export {
-    abridgedInvoicesLoaded
+    abridgedInvoicesLoaded,
+    invoicesFiltered
 }
