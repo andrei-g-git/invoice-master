@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import * as actions from "../redux/actions";
+import "../css/FilterByStatus.scss";
 
 function FilterByStatus(props) {
   return (

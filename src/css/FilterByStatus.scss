@@ -1,0 +1,25 @@
+@import "Variables";
+
+.filter-by-status{
+    display: flex;
+    gap: 0.1rem;
+    //align-items: center;
+}
+
+.status-select-label{
+    color: $text-color-primary-light;
+}
+
+.status-select{
+    //appearance: none;
+    outline: none;
+    border: none;
+    background-color: $bk-main-dark;
+    color: $text-color-primary-light;
+    font-size: medium;
+    transform: translateY(1px); //it's misaligned with the selector label
+}
+
+.status-option{
+    border: none; //doesn't remove option dropdown border
+}
