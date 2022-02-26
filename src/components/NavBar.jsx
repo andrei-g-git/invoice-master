@@ -4,7 +4,9 @@ function NavBar() {
     return (
         <div className="nav-bar">
             <div className="nav-bar-upper-left">
-                top
+                <div className="logo">
+
+                </div>
             </div>
             <div className="nav-bar-end">
                 bottom

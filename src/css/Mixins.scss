@@ -7,8 +7,8 @@
     margin: 0;  
 }
 
-@mixin invoiceElementCommon($minWidth, $gridHandle, $justifySelfDesktop, /* $justifySelfMobile, */ $justifySelfTablet, $justifySelfMobile){
-    min-width: $minWidth;
+@mixin invoiceElementCommon($minWidth, $gridHandle, $justifySelfDesktop, $justifySelfTablet, $justifySelfMobile){
+    //min-width: $minWidth;
     box-sizing: border-box;
     grid-area: $gridHandle;
     justify-self: $justifySelfDesktop;

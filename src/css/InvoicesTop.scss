@@ -13,15 +13,21 @@
         height: 4rem;
 
         h1, p{
-            margin: 0;
+            margin: 0;           
         }
 
         h1{
             color: $text-color-primary-light;
+            @media(max-width: map-get($breakpoints, "tablet")){
+                font-size: x-large;
+            }              
         }
 
         p{
             color: $text-color-secondary-light;
+            @media(max-width: map-get($breakpoints, "tablet")){
+                font-size: small;
+            }             
         }
     }
 

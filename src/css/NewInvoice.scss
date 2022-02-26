@@ -5,6 +5,9 @@
     @include buttonBackgroundCommon(flex-start, 9rem, 2rem, 1.1rem, $bg-cta);
     gap: 0.5rem;
     padding: 0.1rem 0.3rem 0.1rem 0.3rem;    
+    @media(max-width: map-get($breakpoints, "mobile")){
+        width: 4rem;
+    }
 }
 
 .add-icon{ 
@@ -12,5 +15,20 @@
 }
 
 .new-invoice-label{
-    color: #ffffff;
+    display: flex;
+    gap: 0.5rem;
+
+    .new-invoice-label-first-word, .new-invoice-label-second-word{
+        color: #ffffff;
+    }
+
+    @media(max-width: map-get($breakpoints, "mobile")){
+        width: 4rem;
+    }   
+
+    .new-invoice-label-second-word{
+        @media(max-width: map-get($breakpoints, "mobile")){
+            display: none;
+        }  
+    }
 }

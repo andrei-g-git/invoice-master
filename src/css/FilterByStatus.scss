@@ -3,11 +3,13 @@
 .filter-by-status{
     display: flex;
     gap: 0.1rem;
-    //align-items: center;
 }
 
 .status-select-label{
     color: $text-color-primary-light;
+    @media(max-width: map-get($breakpoints, "mobile")){
+        display: none;
+    }
 }
 
 .status-select{
@@ -18,6 +20,12 @@
     color: $text-color-primary-light;
     font-size: medium;
     transform: translateY(1px); //it's misaligned with the selector label
+}
+
+.status-select-label, .status-select{
+    @media(max-width: map-get($breakpoints, "tablet")){
+        font-size: small;
+    }    
 }
 
 .status-option{

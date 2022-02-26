@@ -5,6 +5,9 @@
     @include invoiceElementCommon($width-invoice-status, status, center, center, start);
     @include buttonBackgroundCommon(center, $width-invoice-status, 2rem, 0.2rem, $bgColor);
 
+    //min-width: $width-invoice-status;
+    width: 5rem;//$width-invoice-status;
+
     .invoice-status{
         font-size: medium;
         color: $color;
@@ -50,7 +53,7 @@
 }
 
 .invoice-client{
-    @include invoiceElementCommon($width-invoice-client, client, start, start, start);
+    @include invoiceElementCommon($width-invoice-client, client, start, start, start); //THEY NO LONGER HAVE MIN-WIDTH
     @include shortTextCommon(large, $text-color-primary-light);
 }
 .invoice-number{   
