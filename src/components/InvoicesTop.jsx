@@ -1,3 +1,4 @@
+import { connect } from 'react-redux'
 import NewInvoice from "./NewInvoice";
 import FilterByStatus from "./FilterByStatus";
 import "../css/InvoicesTop.scss";
@@ -13,11 +14,17 @@ function InvoicesTop(props) {
         <div className="invoice-top-right">
             <FilterByStatus />
 
-            <NewInvoice />
+            <NewInvoice noteIndex={props.invoices.length}/> {/* put new note at the end of the array */}
         </div>
 
     </div>
     )
 }
 
-export default InvoicesTop;
+const mapStateToProps = (state) => {
+    return{
+        invoices: state.data.abridgedInvoices
+    }
+};
+
+export default connect(mapStateToProps, null)(InvoicesTop)

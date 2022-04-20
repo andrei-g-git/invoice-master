@@ -1,11 +1,14 @@
 import { connect } from 'react-redux';
-import { editorToggled } from '../redux/actions';
+import { editorToggled, editedAtIndex } from '../redux/actions';
 import "../css/NewInvoice.scss";
 
 function NewInvoice(props) {
 	return (
 		<div className="new-invoice"
-			onClick={() => props.toggleEditor(! props.editorOpen)}
+			onClick={() => {
+				props.toggleEditor(! props.editorOpen);
+				props.editNoteWithIndex(props.noteIndex);
+			}}
 		>
 			<div className="add-icon">
 
@@ -24,7 +27,7 @@ function NewInvoice(props) {
 
 const mapStateToProps = (state) => {
 	return {
-		editorOpen: state.ui.editorOpen
+		editorOpen: state.ui.editorOpen,
 	}
 };
 
@@ -32,6 +35,9 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		toggleEditor: (isOpen) => {
 			dispatch(editorToggled(isOpen));
+		},
+		editNoteWithIndex: (index) => {
+			dispatch(editedAtIndex(index));
 		}
 	}
 }

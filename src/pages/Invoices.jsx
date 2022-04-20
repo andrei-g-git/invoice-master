@@ -22,7 +22,7 @@ function Invoices(props) {
                 props.initializeFilteredInvoices(response);
             }
         });
-    }, []);
+    }, [props.editorOpen]); //each time editor opens and closes it assumes an invoice was uploaded to the server and updates with new data. I'm only interested in the closed status but I don't know how to filter that
 
     return (
         <div className="invoices-container">

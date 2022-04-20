@@ -1,13 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { editorToggled } from '../redux/actions';
 import "../css/InvoiceEdit.scss";
+
+const $ = require("jquery");
 
 export const InvoiceEdit = (props) => {
   return (
-    <div className="edit-form-container">
+    <div className="edit-form-container">     
         <form className="edit-form"
             data-testid="edit-form"
-            //style={{backgroundColor: "blue"}}
+            onSubmit={null}
         >
             <label htmlFor="name-field">Customer name</label>
             <input className="" id="name-field"
@@ -42,6 +45,7 @@ export const InvoiceEdit = (props) => {
             <input className=""
                 type="submit"
                 value="File Invoice"
+                onClick={() => props.toggleEditor(! props.editorOpen)}
             />
 
             
@@ -50,8 +54,43 @@ export const InvoiceEdit = (props) => {
   )
 }
 
-const mapStateToProps = (state) => ({})
+const handleSubmit = () => {
+    
+}
 
-const mapDispatchToProps = {}
+const uploadInvoice = (data) => {
+    $.ajax({
+        type: "POST",
+        url: "/api/invoices",
+        data: { invoice: {
+            name: data.name,
+            order: data.order,
+            date: data.date,
+            amount: data.amount,
+            status: data.status,
+            country: data.country,
+            city: data.city,
+            phone: data.phone
+        }},
+        success: response => {
+            console.log(response)
+            //props.fetchSearchedGames(response)
+        }        
+    })
+};
+
+const mapStateToProps = (state) => {
+	return {
+		editorOpen: state.ui.editorOpen,
+	}
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		toggleEditor: (isOpen) => {
+			dispatch(editorToggled(isOpen));
+		}
+	}
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(InvoiceEdit)
