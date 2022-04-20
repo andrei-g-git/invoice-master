@@ -5,6 +5,7 @@ import * as actions from "../redux/actions";
 import Invoice from "../components/Invoice";
 //import NewInvoice from "../components/NewInvoice";
 import InvoicesTop from "../components/InvoicesTop";
+import InvoiceEdit from "../components/InvoiceEdit"; 
 import "../css/Invoices.scss";
 
 const $ = require("jquery");
@@ -42,6 +43,13 @@ function Invoices(props) {
                     )
                 }
             </div>
+
+            {
+                props.editorOpen ?
+                    <InvoiceEdit />
+                :
+                    null
+            }
         </div>
     )
 }
@@ -49,7 +57,8 @@ function Invoices(props) {
 const mapStateToProps = (state) => {
     return{
         invoices: state.data.abridgedInvoices,
-        filteredInvoices: state.data.filteredInvoices
+        filteredInvoices: state.data.filteredInvoices,
+        editorOpen: state.ui.editorOpen
     }
 }
 

@@ -1,12 +1,27 @@
 @import "Variables";
 
+@mixin navbarImage($url){
+    background-image: url($url);
+    height: 4rem;
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: relative;
+    //top: 2rem;
+    left: ($nav-bar-width-desktop - $logo-width-desktop) / 2; 
+    @media(max-width: map-get($breakpoints, "tablet")){
+        width: $logo-width-mobile;
+        top: ($nav-bar-height-tablet - $logo-height-mobile) / 2;
+        left: 0.2rem;
+    }
+}
+
 .nav-bar{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     //align-items: center;
     position: fixed;
-    width: 15rem;
+    width: $nav-bar-width-desktop;//15rem;
     height: 100vh;
     background-color: #252945;
     border: solid 1px red;
@@ -22,12 +37,25 @@
     }
 
     .logo{
-        background-image: url("../assets/bird-white-small1.png");
-        height: 4rem;
-        background-repeat: no-repeat;
-        background-size: contain;
-        @media(max-width: map-get($breakpoints, "tablet")){
-            width: 3.5rem;
-        }
+        // background-image: url("../assets/bird-white-small1.png");
+        // height: 4rem;
+        // background-repeat: no-repeat;
+        // background-size: contain;
+        // position: relative;
+        // top: 2rem;
+        // left: ($nav-bar-width-desktop - $logo-width-desktop) / 2; 
+        // @media(max-width: map-get($breakpoints, "tablet")){
+        //     width: $logo-width-mobile;
+        //     top: ($nav-bar-height-tablet - $logo-height-mobile) / 2;
+        //     left: 0.2rem;
+        // }
+
+        @include navbarImage("../assets/bird-white-small1.png");
+        top: 2rem;
+    }
+
+    .avatar{
+        @include navbarImage("../assets/user-avatar.png");
+        bottom: 2rem;
     }
 }

@@ -39,10 +39,10 @@
     background-color: $bgColor;      
 }
 
-@mixin responsiveContentWidth($desktop, $tables, $mobile){
+@mixin responsiveContentWidth($desktop, $tablet, $mobile){
     width: $desktop;
     @media(max-width: map-get($breakpoints, "tablet")){
-        width: $tables;
+        width: $tablet;
     }
     @media(max-width: map-get($breakpoints, "mobile")){
         width: $mobile;

@@ -14,7 +14,15 @@ function invoicesFiltered(filteredInvoices){
     }
 }
 
+function editorToggled(isOpen){
+    return{
+        type: actionTypes.EDITOR_TOGGLED,
+        payload: isOpen
+    }
+}
+
 export {
     abridgedInvoicesLoaded,
-    invoicesFiltered
+    invoicesFiltered,
+    editorToggled
 }
