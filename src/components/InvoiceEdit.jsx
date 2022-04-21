@@ -18,7 +18,7 @@ export const InvoiceEdit = (props) => {
     <div className="edit-form-container">     
         <form className="edit-form"
             data-testid="edit-form"
-            onSubmit={/* () =>  */curryHandleSubmit(props)}
+            onSubmit={curryHandleSubmit(props)}
         >
             <label htmlFor="name-field">Customer name</label>
             <input className="" id="name-field"
@@ -59,7 +59,6 @@ export const InvoiceEdit = (props) => {
             <input className=""
                 type="submit"  //--- apparently "submit" disconnects the form if btn has click event
                 value="File Invoice"
-                //onClick={() => props.toggleEditor(! props.editorOpen)}
             />
 
             
@@ -69,52 +68,69 @@ export const InvoiceEdit = (props) => {
 }
 
 const curryHandleSubmit = (props) => {
-    console.log("curry handle submit" + props.changes)
     return function(event) {
-        console.log("curry handle submit")
-
-        const changes = props.changes;
 
         event.preventDefault();
 
-        $.ajax({
-            type: "POST",
-            url: "/api/invoices/add",
-            data: { 
-                //invoice: {
-                    name: changes.name,
-                    order: 999,//changes.order,
-                    date: "99-99-99",//changes.date,
-                    amount: changes.amount,
-                    status: changes.status,
-                    country: changes.country,
-                    city: changes.city,
-                    phone: changes.phone
-            /* } */},
-            success: response => {
-                console.log(response)
-                //props.fetchSearchedGames(response)
-            }        
-        });
+        postInvoice(props, $);
+        
 
         props.toggleEditor(! props.editorOpen);
     }
 }
 
-const uploadInvoice = (data) => {
-    
-};
+const postInvoice = (props, $) => {
+    const changes = props.changes;
+
+    const invoicesLength = props.invoices.length;
+    const isNewInvoice = props.index == invoicesLength;
+
+    const newestInvoice = props.invoices[invoicesLength - 1];
+
+    let url = "/api/invoices/add";
+    let order = newestInvoice.ORD_NUM + 1;
+    if(! isNewInvoice){
+        url = "/api/invoices/edit";
+        const selectedInvoice = props.invoices[props.index];
+        order = selectedInvoice.ORD_NUM;
+    }
+
+    const dateObject = new Date();
+    const year = dateObject.getUTCFullYear();
+    const month = dateObject.getUTCMonth() + 1; //starts from 0 
+    const day = dateObject.getUTCDate(); //date actually gets the day...
+    const date = year + "-" + month + "-" + day;
+    console.log(date);
+
+    const requestObject = {
+        type: "POST",
+        url: url,
+        data: { 
+            name: changes.name,
+            order: order,
+            date: date, 
+            amount: changes.amount,
+            status: changes.status,
+            country: changes.country,
+            city: changes.city,
+            phone: changes.phone
+        },
+        success: response => {
+            console.log(response)
+        }        
+    };        
+
+    $.ajax(requestObject);
+
+    return requestObject; //for testing
+}
 
 const mapStateToProps = (state) => {
 	return {
 		editorOpen: state.ui.editorOpen,
-        // name: state.ui.edit.name,
-        // amount: state.ui.edit.amount,
-        // status: state.ui.edit.state,
-        // country: state.ui.edit.country,
-        // city: state.ui.edit.city,
-        // phone: state.ui.edit.phone
-        changes: state.ui.edit
+        changes: state.ui.edit,
+        index: state.ui.invoiceToEdit,
+        invoices: state.data.abridgedInvoices
 	}
 };
 
@@ -124,36 +140,27 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch(editorToggled(isOpen));
 		},
         handleNameChange: (event) => {
-            //return (event) => {
-                dispatch(nameChanged(event.target.value));
-            //}
+            dispatch(nameChanged(event.target.value));
         },
         handleAmountChange: (event) => {
-            //return (event) => {
-                dispatch(amountChanged(event.target.value));
-            //}
+            dispatch(amountChanged(event.target.value));
         },
         handleStatusChange: (event) => {
-            //return (event) => {
-                dispatch(statusChanged(event.target.value));
-            //}
+            dispatch(statusChanged(event.target.value));
         },
         handleCountryChange: (event) => {
-            //return (event) => {
-                dispatch(countryChanged(event.target.value));
-            //}
+            dispatch(countryChanged(event.target.value));
         },
         handleCityChange: (event) => {
-            //return (event) => {
-                dispatch(cityChanged(event.target.value));
-            //}
+            dispatch(cityChanged(event.target.value));
         },
         handlePhoneChange: (event) => {
-            //return (event) => {
-                dispatch(phoneChanged(event.target.value));
-            //}
+            dispatch(phoneChanged(event.target.value));
         }                                        
 	}
 }
 
+export {
+    postInvoice
+}
 export default connect(mapStateToProps, mapDispatchToProps)(InvoiceEdit)

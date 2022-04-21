@@ -11,7 +11,7 @@ import {
 
 const initialState = {
     editorOpen: false,
-    noteToEdit: 0,
+    invoiceToEdit: 0,
     edit: {
         name: "",
         amount: "",
@@ -32,7 +32,7 @@ export const uiReducer = (state = initialState, action) => {
         case EDITED_AT_INDEX:
             return{
                 ...state,
-                noteToEdit: action.payload
+                invoiceToEdit: action.payload
             }
         case NAME_CHANGED:
             return{
