@@ -48,14 +48,8 @@ describe("<InvoiceEdit>", () => {
     });
 
     it("renders submit button's handle", () => {
-        const submitButton = screen.getByText(/file invoice/i);
+        const submitButton = screen.getByText(/add invoice/i); //this is broken up by multiple elements, won't pass
         expect(submitButton).toBeInTheDocument();
     })
 
-    // it("has a blue background", () => { //NEEDS INLINE STYLES
-    //     const form = screen.getByTestId("edit-form");
-    //     expect(form).toHaveStyle(`
-    //         background-color: blue;
-    //     `);
-    // })
 })

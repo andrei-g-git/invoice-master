@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import SubmitForm from './SubmitForm';
+import FormGroup from './FormGroup';
+import StatusSelect from './StatusSelect';
 import { 
     editorToggled,
     nameChanged,
@@ -26,61 +28,38 @@ export const InvoiceEdit = (props) => {
             data-testid="edit-form"
             onSubmit={curryHandleSubmit(props)}
         >
-            <div className="input-group">
-                <label htmlFor="name-field">Customer name</label>
-                <input className="" id="name-field"
-                    type="text"
-                    onChange={(event) => props.handleNameChange(event)}
+
+            <FormGroup title="Customer name"
+                notifyChange={props.handleNameChange}
+            />
+
+            <FormGroup title="Transaction amount"
+                notifyChange={props.handleAmountChange}
+            />
+
+            <div className="status-select-wrapper">
+                <StatusSelect options={[
+                        {value: "Pending", id: 0},
+                        {value: "Completed", id: 1},
+                        {value: "Overdue", id: 2},
+                    ]}
+                    placeholder="Select completion status"
+                    notifyChange={props.handleStatusChange}
                 />
             </div>
+            
+            <FormGroup title="Country of origin"
+                notifyChange={props.handleCountryChange}
+            />
 
+            <FormGroup title="City of residence"
+                notifyChange={props.handleCityChange}
+            />
 
-            <div className="input-group">
-                <label htmlFor="amount-field">Transaction amount</label>
-                <input className="" id="amount-field"
-                    type="text"
-                    onChange={(event) => props.handleAmountChange(event)}
-                />                
-            </div>
+            <FormGroup title="Phone number"
+                notifyChange={props.handlePhoneChange}
+            />
 
-
-            <div className="input-group">
-                <label htmlFor="status-field">Transaction status</label>
-                <input className="" id="status-field"
-                    type="text"
-                    onChange={(event) => props.handleStatusChange(event)}
-                />                
-            </div>
-
-
-            <div className="input-group">
-                <label htmlFor="country-field">Country of origin</label>
-                <input className="" id="country-field"
-                    type="text"
-                    onChange={(event) => props.handleCountryChange(event)}
-                />                
-            </div>
-
-
-            <div className="input-group">
-                <label htmlFor="city-field">City of residence</label>
-                <input className="" id="city-field"
-                    type="text"
-                    onChange={(event) => props.handleCityChange(event)}
-                />                
-            </div>
-
-            <div className="input-group">
-                <label htmlFor="phone-field">Phone number</label>
-                <input className="" id="phone-field"
-                    type="text"
-                    onChange={(event) => props.handlePhoneChange(event)}
-                />
-            </div>
-            {/* <input className="submit-button"
-                type="submit"  //--- apparently "submit" disconnects the form if btn has click event
-                value="File Invoice"
-            /> */}
             <SubmitForm />
             
         </form>
@@ -126,7 +105,24 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(amountChanged(event.target.value));
         },
         handleStatusChange: (event) => {
-            dispatch(statusChanged(event.target.value));
+            const elementValue = event.target.value;
+            let data = "";
+            switch(elementValue){
+                case "Pending": case "pending": case "PEN":
+                    data = "PEN";
+                break;
+                case "Completed": case "completed": case "SOD":
+                    data = "SOD";
+                break;
+                case "Overdue": case "overdue": case "OVD":
+                    data = "OVD";
+                break;
+                default:
+                    data = "PEN";
+                break;
+            }
+
+            dispatch(statusChanged(data));
         },
         handleCountryChange: (event) => {
             dispatch(countryChanged(event.target.value));
