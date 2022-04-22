@@ -25,49 +25,84 @@ const $ = require("jquery");
 
 
 export const InvoiceEdit = (props) => {
-  return (
-    <div className="edit-form-container">     
-        <form className="edit-form"
-            data-testid="edit-form"
-            onSubmit={curryHandleSubmit(props)}
-        >
 
-            <FormGroup title="Customer name"
-                notifyChange={props.handleNameChange}
-            />
+    const content = getInputContentOrBlanks(props.invoices, props.index);
 
-            <FormGroup title="Transaction amount"
-                notifyChange={props.handleAmountChange}
-            />
+    return (
+        <div className="edit-form-container">     
+            <form className="edit-form"
+                data-testid="edit-form"
+                onSubmit={curryHandleSubmit(props)}
+            >
 
-            <div className="status-select-wrapper">
-                <StatusSelect options={[
-                        {value: "Pending", id: 0},
-                        {value: "Completed", id: 1},
-                        {value: "Overdue", id: 2},
-                    ]}
-                    placeholder="Select completion status"
-                    notifyChange={props.handleStatusChange}
+                <FormGroup title="Customer name"
+                    content={content.name}
+                    notifyChange={props.handleNameChange}
                 />
-            </div>
 
-            <FormGroup title="Country of origin"
-                notifyChange={props.handleCountryChange}
-            />
+                <FormGroup title="Transaction amount"
+                    content={content.amount}
+                    notifyChange={props.handleAmountChange}
+                />
 
-            <FormGroup title="City of residence"
-                notifyChange={props.handleCityChange}
-            />
+                <div className="status-select-wrapper">
+                    <StatusSelect content={content.status}
+                        options={[
+                            {value: "Pending", id: 0},
+                            {value: "Completed", id: 1},
+                            {value: "Overdue", id: 2},
+                        ]}
+                        placeholder="Select completion status"
+                        notifyChange={props.handleStatusChange}
+                    />
+                </div>
 
-            <FormGroup title="Phone number"
-                notifyChange={props.handlePhoneChange}
-            />
+                <FormGroup title="Country of origin"
+                    content={content.country}
+                    notifyChange={props.handleCountryChange}
+                />
 
-            <SubmitForm />
-            
-        </form>
-    </div>
+                <FormGroup title="City of residence"
+                    content={content.city}
+                    notifyChange={props.handleCityChange}
+                />
+
+                <FormGroup title="Phone number"
+                    content={content.phone}
+                    notifyChange={props.handlePhoneChange}
+                />
+
+                <SubmitForm />
+                
+            </form>
+        </div>
   )
+}
+
+const getInputContentOrBlanks = (invoices, index) => {
+    let name = "",
+        amount = null,
+        status = "",
+        country = "",
+        city = "",
+        phone = null;
+
+    if(index < invoices.length){
+        name = invoices[index].CUST_NAME;
+        amount = invoices[index].ORD_AMOUNT;
+        status = invoices[index].ORD_DESCRIPTION;
+        country = invoices[index].CUST_COUNTRY;
+        city = invoices[index].CUST_CITY;
+        phone = invoices[index].PHONE_NO;      
+    }
+    return{
+        name: name,
+        amount: amount,
+        status: status,
+        country: country,
+        city: city,
+        phone: phone        
+    }
 }
 
 const curryHandleSubmit = (props) => {

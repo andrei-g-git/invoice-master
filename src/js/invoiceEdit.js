@@ -12,12 +12,6 @@ const postInvoice = (props, $, createRequestObject, getSimpleDate) => {
     const justTheCustomerElements = props.invoices.map(item => item.CUST_CODE);
     const customers = [... new Set(justTheCustomerElements)]; //filter unique names , es6 or later
     let customerRealNumber = customers.length + 1;
-    if(! isNewInvoice){
-        url = "/api/invoices/edit";
-        const selectedInvoice = props.invoices[props.index];
-        order = selectedInvoice.ORD_NUM;
-        customerRealNumber = selectedInvoice.CUST_CODE;
-    }
 
     let customerCode = "C000" + customerRealNumber.toString(); 
     if(invoicesLength > 99){
@@ -25,6 +19,13 @@ const postInvoice = (props, $, createRequestObject, getSimpleDate) => {
     }
     if(invoicesLength <= 9){
         customerCode = "C0000" + customerRealNumber.toString();
+    }
+
+    if(! isNewInvoice){
+        url = "/api/invoices/edit";
+        const selectedInvoice = props.invoices[props.index];
+        order = selectedInvoice.ORD_NUM;
+        customerCode = selectedInvoice.CUST_CODE;
     }
 
     const date = getSimpleDate();

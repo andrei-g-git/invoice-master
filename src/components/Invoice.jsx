@@ -44,16 +44,11 @@ function Invoice(props) {
                 </div>
             </div> */}
             <ToggleEditor noteIndex={props.index} >
-                {/* <div className="edit-invoice-container">
+                <div className="edit-invoice-container">
                     <div className="edit-invoice">
                         
                     </div>
-                </div> */}
-
-                <img src={editIcon}
-                    alt="n/a"
-                    style={{width: 32, height: 32}}
-                />
+                </div>
             </ToggleEditor>
 
         </div>
