@@ -21,6 +21,9 @@ import "../css/InvoiceEdit.scss";
 
 const $ = require("jquery");
 
+//IF THE EDITED NOTE INDEX IS SMALLER THAN THE LENGTH OF THE INVOICES ARRAY then find way to pre-fill all the input fields with the proper invoice info, including the select element
+
+
 export const InvoiceEdit = (props) => {
   return (
     <div className="edit-form-container">     
@@ -47,7 +50,7 @@ export const InvoiceEdit = (props) => {
                     notifyChange={props.handleStatusChange}
                 />
             </div>
-            
+
             <FormGroup title="Country of origin"
                 notifyChange={props.handleCountryChange}
             />
@@ -110,16 +113,16 @@ const mapDispatchToProps = (dispatch) => {
             switch(elementValue){
                 case "Pending": case "pending": case "PEN":
                     data = "PEN";
-                break;
+                    break;
                 case "Completed": case "completed": case "SOD":
                     data = "SOD";
-                break;
+                    break;
                 case "Overdue": case "overdue": case "OVD":
                     data = "OVD";
-                break;
+                    break;
                 default:
                     data = "PEN";
-                break;
+                    break;
             }
 
             dispatch(statusChanged(data));

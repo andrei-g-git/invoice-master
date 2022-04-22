@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
-import NewInvoice from "./NewInvoice";
+import ToggleEditor from "./ToggleEditor";
 import FilterByStatus from "./FilterByStatus";
+import CallToAction from './CallToAction';
 import "../css/InvoicesTop.scss";
 
 function InvoicesTop(props) {
@@ -14,7 +15,13 @@ function InvoicesTop(props) {
         <div className="invoice-top-right">
             <FilterByStatus />
 
-            <NewInvoice noteIndex={props.invoices.length}/> {/* put new note at the end of the array */}
+            <ToggleEditor noteIndex={props.invoices.length}>
+                <CallToAction 
+                    icon="add"
+                    firstWord="Add" 
+                    secondWord="Invoice" 
+                />
+            </ToggleEditor> {/* put new note at the end of the array */}
         </div>
 
     </div>

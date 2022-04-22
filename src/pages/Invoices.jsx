@@ -39,6 +39,7 @@ function Invoices(props) {
                             date={invoice.ORD_DATE}
                             amount={invoice.ORD_AMOUNT}
                             status={invoice.ORD_DESCRIPTION} 
+                            index={props.filteredInvoices.indexOf(invoice)}
                         />
                     )
                 }

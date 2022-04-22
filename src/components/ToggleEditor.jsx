@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
-import CallToAction from './CallToAction';
+//import CallToAction from './CallToAction';
 import { editorToggled, editedAtIndex } from '../redux/actions';
 import "../css/NewInvoice.scss";
 
-function NewInvoice(props) {
+function ToggleEditor(props) {
 	return (
 		<button //className="new-invoice"
 			onClick={() => {
@@ -12,11 +12,14 @@ function NewInvoice(props) {
 			}}
 		>
 
-			<CallToAction 
+			{/* <CallToAction 
 				icon="add"
 				firstWord="Add" 
 				secondWord="Invoice" 
-			/>
+			/> */}
+			{
+				props.children
+			}
 		</button>
 	)
 }
@@ -38,4 +41,4 @@ const mapDispatchToProps = (dispatch) => {
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewInvoice)
+export default connect(mapStateToProps, mapDispatchToProps)(ToggleEditor)

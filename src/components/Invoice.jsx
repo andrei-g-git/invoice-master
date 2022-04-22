@@ -1,4 +1,7 @@
+import ToggleEditor from "./ToggleEditor";
 import "../css/Invoice.scss";
+
+import editIcon from "../assets/edit-white.png"
 
 function Invoice(props) {
 
@@ -35,15 +38,23 @@ function Invoice(props) {
                 <p className="invoice-status">{usefulStatus}</p>
             </div>
 
-{/*             <div className="edit-invoice-container">
-                <EditInvoice />
-            </div> */}   {/* what the fuck */}
-
-            <div className="edit-invoice-container">
+            {/* <div className="edit-invoice-container">
                 <div className="edit-invoice">
                     
                 </div>
-            </div>
+            </div> */}
+            <ToggleEditor noteIndex={props.index} >
+                {/* <div className="edit-invoice-container">
+                    <div className="edit-invoice">
+                        
+                    </div>
+                </div> */}
+
+                <img src={editIcon}
+                    alt="n/a"
+                    style={{width: 32, height: 32}}
+                />
+            </ToggleEditor>
 
         </div>
     )
