@@ -13,6 +13,9 @@
 .add-icon{ 
     @include standardIcon("../assets/plus-white.png", 1.8rem, 1.8rem); 
 }
+.ok-icon{ 
+    @include standardIcon("../assets/white-check.png", 1.8rem, 1.8rem); 
+}
 
 .new-invoice-label{
     display: flex;

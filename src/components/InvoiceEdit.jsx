@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import SubmitForm from './SubmitForm';
 import { 
     editorToggled,
     nameChanged,
@@ -9,6 +10,11 @@ import {
     cityChanged,
     phoneChanged 
 } from '../redux/actions';
+import {
+    postInvoice,
+    createRequestObject,
+    getSimpleDate
+} from "../js/invoiceEdit";
 import "../css/InvoiceEdit.scss";
 
 const $ = require("jquery");
@@ -20,47 +26,62 @@ export const InvoiceEdit = (props) => {
             data-testid="edit-form"
             onSubmit={curryHandleSubmit(props)}
         >
-            <label htmlFor="name-field">Customer name</label>
-            <input className="" id="name-field"
-                type="text"
-                onChange={(event) => props.handleNameChange(event)}
-            />
+            <div className="input-group">
+                <label htmlFor="name-field">Customer name</label>
+                <input className="" id="name-field"
+                    type="text"
+                    onChange={(event) => props.handleNameChange(event)}
+                />
+            </div>
 
-            <label htmlFor="amount-field">Transaction amount</label>
-            <input className="" id="amount-field"
-                type="text"
-                onChange={(event) => props.handleAmountChange(event)}
-            />
 
-            <label htmlFor="status-field">Transaction status</label>
-            <input className="" id="status-field"
-                type="text"
-                onChange={(event) => props.handleStatusChange(event)}
-            />
+            <div className="input-group">
+                <label htmlFor="amount-field">Transaction amount</label>
+                <input className="" id="amount-field"
+                    type="text"
+                    onChange={(event) => props.handleAmountChange(event)}
+                />                
+            </div>
 
-            <label htmlFor="country-field">Country of origin</label>
-            <input className="" id="country-field"
-                type="text"
-                onChange={(event) => props.handleCountryChange(event)}
-            />
 
-            <label htmlFor="city-field">City of residence</label>
-            <input className="" id="city-field"
-                type="text"
-                onChange={(event) => props.handleCityChange(event)}
-            />
+            <div className="input-group">
+                <label htmlFor="status-field">Transaction status</label>
+                <input className="" id="status-field"
+                    type="text"
+                    onChange={(event) => props.handleStatusChange(event)}
+                />                
+            </div>
 
-            <label htmlFor="phone-field">Phone number</label>
-            <input className="" id="phone-field"
-                type="text"
-                onChange={(event) => props.handlePhoneChange(event)}
-            />
 
-            <input className=""
+            <div className="input-group">
+                <label htmlFor="country-field">Country of origin</label>
+                <input className="" id="country-field"
+                    type="text"
+                    onChange={(event) => props.handleCountryChange(event)}
+                />                
+            </div>
+
+
+            <div className="input-group">
+                <label htmlFor="city-field">City of residence</label>
+                <input className="" id="city-field"
+                    type="text"
+                    onChange={(event) => props.handleCityChange(event)}
+                />                
+            </div>
+
+            <div className="input-group">
+                <label htmlFor="phone-field">Phone number</label>
+                <input className="" id="phone-field"
+                    type="text"
+                    onChange={(event) => props.handlePhoneChange(event)}
+                />
+            </div>
+            {/* <input className="submit-button"
                 type="submit"  //--- apparently "submit" disconnects the form if btn has click event
                 value="File Invoice"
-            />
-
+            /> */}
+            <SubmitForm />
             
         </form>
     </div>
@@ -72,57 +93,16 @@ const curryHandleSubmit = (props) => {
 
         event.preventDefault();
 
-        postInvoice(props, $);
+        postInvoice(
+            props, 
+            $, 
+            createRequestObject, 
+            getSimpleDate
+        );
         
 
         props.toggleEditor(! props.editorOpen);
     }
-}
-
-const postInvoice = (props, $) => {
-    const changes = props.changes;
-
-    const invoicesLength = props.invoices.length;
-    const isNewInvoice = props.index == invoicesLength;
-
-    const newestInvoice = props.invoices[invoicesLength - 1];
-
-    let url = "/api/invoices/add";
-    let order = newestInvoice.ORD_NUM + 1;
-    if(! isNewInvoice){
-        url = "/api/invoices/edit";
-        const selectedInvoice = props.invoices[props.index];
-        order = selectedInvoice.ORD_NUM;
-    }
-
-    const dateObject = new Date();
-    const year = dateObject.getUTCFullYear();
-    const month = dateObject.getUTCMonth() + 1; //starts from 0 
-    const day = dateObject.getUTCDate(); //date actually gets the day...
-    const date = year + "-" + month + "-" + day;
-    console.log(date);
-
-    const requestObject = {
-        type: "POST",
-        url: url,
-        data: { 
-            name: changes.name,
-            order: order,
-            date: date, 
-            amount: changes.amount,
-            status: changes.status,
-            country: changes.country,
-            city: changes.city,
-            phone: changes.phone
-        },
-        success: response => {
-            console.log(response)
-        }        
-    };        
-
-    $.ajax(requestObject);
-
-    return requestObject; //for testing
 }
 
 const mapStateToProps = (state) => {
@@ -160,7 +140,4 @@ const mapDispatchToProps = (dispatch) => {
 	}
 }
 
-export {
-    postInvoice
-}
 export default connect(mapStateToProps, mapDispatchToProps)(InvoiceEdit)

@@ -1,11 +1,4 @@
-//import React from "react";
-//import enzyme, { shallow } from "enzyme";
-//import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
-import /* InvoiceEdit, */ { postInvoice } from "../../components/InvoiceEdit";
-//import { makeStore } from "../../redux/makeStore"; //not exactly a unit test
-
-
-//enzyme.configure({adapter: new Adapter()});
+import { postInvoice, createRequestObject, getSimpleDate } from "../../js/invoiceEdit";//"../../components/InvoiceEdit"; //not exactly a unit test, but they are just helper functions
 
 describe("InvoiceEdit unit and functionality", () => {
     it("test", () => {
@@ -24,18 +17,29 @@ describe("InvoiceEdit unit and functionality", () => {
             }
         ]
 
-        const props = {
+        let props = {
             changes: changes,
             invoices: invoices,
             index: 0
         }
-        //let wrapper = shallow(<InvoiceEdit store={makeStore()} changes={changes} invoices={invoices}/>);
+
         let $ = {
             ajax: (requestObject) => {
                 return 1
             }
-        }  //require("jquery");
-        expect(postInvoice(props, $)).toBeTruthy();
-        expect(postInvoice(props, $).ulr).toBe("/api/invoices/adddddddddddddddd")
+        }  
+        let request = postInvoice(props, $, createRequestObject, getSimpleDate);
+        console.log(request);
+        expect(request).toBeTruthy();
+        expect(request.url).toBe("/api/invoices/edit");
+        expect(request.data.order).toBe(123);
+        expect(request.data.customerCode).toBe("C00001");
+        props.index = 1;
+        request = postInvoice(props, $, createRequestObject, getSimpleDate);
+        expect(request.url).toBe("/api/invoices/add");
+        expect(request.data.order).toBe(124);
+        expect(request.data.customerCode).toBe("C00002");
+
+        expect(request.data.date).toContain("202") // 2022-04-day
     });
 });

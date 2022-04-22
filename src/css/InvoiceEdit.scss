@@ -15,26 +15,38 @@
     .edit-form{
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        //justify-content: center;
+        padding-top: 3rem;
+        gap: 1rem;
         align-items: center;
         width: 60%;
-        height: 50rem;
+        height: 40rem;
         color: $text-color-primary-light;
         background-color: $bk-invoice-dark;
 
-        animation: popup 0.5s ease-in-out forwards;
+        animation: popup 0.3s ease-in-out forwards;
+
+        .input-group{
+            display: flex;
+            flex-direction: column;
+        }
+
+        .submit-button{
+            position: absolute;
+            bottom: 3rem;
+        }
 
         @keyframes popup {
             0%{ transform: scale(0, 0); 
                 opacity: 0.5
             }
-            40%{ transform: scale(1.3, 1.3); 
-                opacity: 0.7 
-            }
-            60%{ transform: scale(0.85, 0.85); 
-                opacity: 0.9 
-            }
-            80%{ transform: scale(1.15, 1.15); 
+            // 40%{ transform: scale(1.3, 1.3); 
+            //     opacity: 0.7 
+            // }
+            // 60%{ transform: scale(0.85, 0.85); 
+            //     opacity: 0.9 
+            // }
+            70%{ transform: scale(1.15, 1.15); 
                 opacity: 1 
             }
             100%{ transform: scale(1, 1) }
