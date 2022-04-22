@@ -1,0 +1,5 @@
+@import "Mixins";
+
+.submit-button{
+    @include absolutePosition(90%, 50%);
+}

@@ -4,12 +4,12 @@ function StatusSelect(props) {
   return (
     <select className="status-select"
         name="testing name"
-        defaultValue={props.placeholder}
+        required
         onChange={(event) => props.notifyChange(event)}
     >
         <option className="status-value"
-            value={props.placeholder}
-            disabled
+            value=""
+
         >
             {props.placeholder}
         </option>

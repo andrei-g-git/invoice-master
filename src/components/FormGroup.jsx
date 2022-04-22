@@ -7,6 +7,7 @@ function FormGroup(props) {
         <label htmlFor="city-field">{props.title}</label>
         <input className="" id="city-field"
             type="text"
+            required
             onChange={(event) => props.notifyChange(event)} //from parent component
         />                
     </div>

@@ -48,3 +48,10 @@
         width: $mobile;
     }  
 }
+
+@mixin absolutePosition($top, $left, $translateX: -50%, $translateY: -50%){
+    position: absolute;
+    top: $top;
+    left: $left;
+    transform: translate($translateX, $translateY);
+}
