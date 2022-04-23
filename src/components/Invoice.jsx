@@ -12,7 +12,7 @@ function Invoice(props) {
 
     switch(props.status){
         case "SOD": 
-            usefulStatus = "PAID";
+            usefulStatus = "PAID"; //these should all be in 1 place, like an object or a map
             statusName = "paid"; 
             break;
         case "PEN": 

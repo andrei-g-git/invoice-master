@@ -15,7 +15,7 @@ function InvoicesTop(props) {
         <div className="invoice-top-right">
             <FilterByStatus />
 
-            <ToggleEditor noteIndex={props.invoices.length}>
+            <ToggleEditor noteIndex={props.invoices.length}> 
                 <CallToAction 
                     icon="add"
                     firstWord="Add" 

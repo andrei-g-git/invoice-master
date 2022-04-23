@@ -17,6 +17,7 @@ import {
     createRequestObject,
     getSimpleDate
 } from "../js/invoiceEdit";
+import { statuses } from '../js/statuses';
 import "../css/InvoiceEdit.scss";
 
 const $ = require("jquery");
@@ -46,12 +47,8 @@ export const InvoiceEdit = (props) => {
                 />
 
                 <div className="status-select-wrapper">
-                    <StatusSelect content={content.status}
-                        options={[
-                            {value: "Pending", id: 0},
-                            {value: "Completed", id: 1},
-                            {value: "Overdue", id: 2},
-                        ]}
+                    <StatusSelect content={ statuses.filter(item => item.sql === content.status)[0].value }
+                        options={statuses}
                         placeholder="Select completion status"
                         notifyChange={props.handleStatusChange}
                     />
@@ -143,23 +140,27 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(amountChanged(event.target.value));
         },
         handleStatusChange: (event) => {
-            const elementValue = event.target.value;
-            let data = "";
-            switch(elementValue){
-                case "Pending": case "pending": case "PEN":
-                    data = "PEN";
-                    break;
-                case "Completed": case "completed": case "SOD":
-                    data = "SOD";
-                    break;
-                case "Overdue": case "overdue": case "OVD":
-                    data = "OVD";
-                    break;
-                default:
-                    data = "PEN";
-                    break;
-            }
+            // const elementValue = event.target.value;
+            // let data = "";
+            // switch(elementValue){
+            //     case "Pending": case "pending": case "PEN":
+            //         data = "PEN";
+            //         break;
+            //     case "Completed": case "completed": case "SOD":
+            //         data = "SOD";
+            //         break;
+            //     case "Overdue": case "overdue": case "OVD":
+            //         data = "OVD";
+            //         break;
+            //     default:
+            //         data = "PEN";
+            //         break;
+            // }
 
+            //this is not functional programing ...
+            const optionValue = event.target.value;
+            const statusObject = statuses.filter(item => /* item.sql */ item.value === optionValue)[0]; //this is pretty bad too, I don't know where I'm passing sql handles and where I' m passing display values...
+            const data = statusObject.sql;
             dispatch(statusChanged(data));
         },
         handleCountryChange: (event) => {
