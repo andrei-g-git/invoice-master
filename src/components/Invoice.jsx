@@ -1,8 +1,6 @@
 import ToggleEditor from "./ToggleEditor";
 import "../css/Invoice.scss";
 
-import editIcon from "../assets/edit-white.png"
-
 function Invoice(props) {
 
     let usefulStatus = "N/A";

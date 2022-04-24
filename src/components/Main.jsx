@@ -4,21 +4,23 @@ import Invoices from "../pages/Invoices";
 import "../css/Main.scss";
 
 function Main(props) {
-    return (   
-        <div className="main">
+	return (
+		<div className="main">
 
-          <NavBar />
+			<NavBar />
 
-          <Routes>
-              <Route exact path="/"
-                  element={
-                    <Invoices path={props.server.abridgedInvoices} />
-                  } //fuck whoever is changing all this shit
-              />
+			<Routes>
+				<Route exact path="/"
+					element={
+						<Invoices path={props.server.abridgedInvoices}
+							delayIncrement={65}
+						/>
+					} //fuck whoever is changing all this shit
+				/>
 
-          </Routes>        
-        </div>
-    )
+			</Routes>
+		</div>
+	)
 }
 
 export default Main
