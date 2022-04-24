@@ -1,11 +1,10 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { createContext } from "react";
 import * as actions from "../redux/actions";
-import Invoice from "../components/Invoice";
-//import NewInvoice from "../components/NewInvoice";
-import InvoicesTop from "../components/InvoicesTop";
-import InvoiceEdit from "../components/InvoiceEdit"; 
+// import Invoice from "../components/Invoice";  //these are now props
+// import InvoicesTop from "../components/InvoicesTop";
+// import InvoiceEdit from "../components/InvoiceEdit"; 
 import Delayed from "../components/Delayed";
 import "../css/Invoices.scss";
 
@@ -25,15 +24,10 @@ function Invoices(props) {
         });
     }, [props.editorOpen]); //each time editor opens and closes it assumes an invoice was uploaded to the server and updates with new data. I'm only interested in the closed status but I don't know how to filter that
 
-    // const delayArray = [];
-    // for(var i = 0; i <props.filteredInvoices.length; i++){
-    //     delayArray[i] = 250 + i * 250;
-    // }
-
     return (
         <div className="invoices-container">
 
-            <InvoicesTop invoiceCount={props.filteredInvoices.length} />
+            <props.InvoicesTop invoiceCount={props.filteredInvoices.length} />
 
             <div className="invoices">
                 {
@@ -45,7 +39,7 @@ function Invoices(props) {
                                 makeDelayArray
                             )}
                         > 
-                            <Invoice 
+                            <props.Invoice 
                                 key={invoice.ORD_NUM}
                                 name={invoice.CUST_NAME} 
                                 number={invoice.ORD_NUM}
@@ -62,7 +56,14 @@ function Invoices(props) {
 
             {
                 props.editorOpen ?
-                    <InvoiceEdit />
+                    <props.InvoiceEdit />
+                :
+                    null
+            }
+
+            {
+                props.deleteConfirmation ?
+                    <props.DeleteConfirmation notifyDelete={props.notAnActualDispatch}/>
                 :
                     null
             }
@@ -82,28 +83,14 @@ const progressiveDelayRender = (itemIndex, itemCount, delayIncrement, callback) 
     const delayArray = callback(itemCount, delayIncrement);
     return delayArray[itemIndex];
 }
-// async function renderInvoicesDelayed(invoices, delay){ //NO
-//     invoices.map(invoice => {
-//         await setCountdown(delay);
-//         return(
-//             <Invoice 
-//                 key={invoice.ORD_NUM}
-//                 name={invoice.CUST_NAME} 
-//                 number={invoice.ORD_NUM}
-//                 date={invoice.ORD_DATE}
-//                 amount={invoice.ORD_AMOUNT}
-//                 status={invoice.ORD_DESCRIPTION} 
-//                 index={props.filteredInvoices.indexOf(invoice)}
-//             />
-//         )
-//     });
-// }
 
 const mapStateToProps = (state) => {
     return{
         invoices: state.data.abridgedInvoices,
         filteredInvoices: state.data.filteredInvoices,
-        editorOpen: state.ui.editorOpen
+        editorOpen: state.ui.editorOpen,
+        deleteConfirmation: state.ui.deleteConfirmation,
+        invoiceToEdit: state.ui.invoiceToEdit
     }
 }
 
@@ -114,6 +101,19 @@ const mapDispatchToProps = (dispatch) => {
         },
         initializeFilteredInvoices: (invoices) => {
             dispatch(actions.invoicesFiltered(invoices));
+        },
+        notAnActualDispatch: (props) => {
+            const invoiceObject = props.invoices[props.invoiceToEdit];
+            const order = invoiceObject.ORD_NUM;
+            const $ = require("jquery");
+            $.ajax({
+                type: "POST",
+                url: "/api/invoices/delete",
+                data: order,
+                success: (response => {
+                    console.log(response)
+                })
+            })
         }
     }
 }

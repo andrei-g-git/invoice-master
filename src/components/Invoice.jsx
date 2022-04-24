@@ -41,12 +41,15 @@ function Invoice(props) {
                     
                 </div>
             </div> */}
-            <ToggleEditor noteIndex={props.index} >
-                <div className="edit-invoice-container">
+            <ToggleEditor noteIndex={props.index}
+                className="edit-invoice-container" //in this case the container is positioned in a grid area and uses justify-self so it needs to be styled
+                //style={{}}//{require("../css/NewInvoice.scss")}
+            >
+                {/* <div className="edit-invoice-container"> */}
                     <div className="edit-invoice">
                         
                     </div>
-                </div>
+                {/* </div> */}
             </ToggleEditor>
 
         </div>

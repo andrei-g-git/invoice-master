@@ -18,7 +18,9 @@ import {
     getSimpleDate
 } from "../js/invoiceEdit";
 import { statuses } from '../js/statuses';
+import DeleteInvoice from './DeleteInvoice';
 import "../css/InvoiceEdit.scss";
+
 
 const $ = require("jquery");
 
@@ -70,6 +72,8 @@ export const InvoiceEdit = (props) => {
                 />
 
                 <SubmitForm />
+
+                <DeleteInvoice />
                 
             </form>
         </div>

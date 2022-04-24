@@ -1,11 +1,12 @@
 import { connect } from 'react-redux';
 //import CallToAction from './CallToAction';
 import { editorToggled, editedAtIndex } from '../redux/actions';
-import "../css/NewInvoice.scss";
+//import "../css/NewInvoice.scss";
 
 function ToggleEditor(props) {
 	return (
-		<button //className="new-invoice"
+		<button className={props.className} //if I just pass the class as a prop and style it in the parent component it still receives the style just fine
+			//style={props.style}
 			onClick={() => {
 				props.toggleEditor(! props.editorOpen);
 				props.editNoteWithIndex(props.noteIndex);

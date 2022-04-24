@@ -64,6 +64,13 @@ function phoneChanged(newValue){
         payload: newValue
     }
 }
+function confirmingDelete(isOpen){
+    return{
+        type: actionTypes.CONFIRMING_DELETE,
+        payload: isOpen
+    }
+}
+
 export {
     abridgedInvoicesLoaded,
     invoicesFiltered,
@@ -74,5 +81,6 @@ export {
     statusChanged,
     countryChanged,
     cityChanged,
-    phoneChanged
+    phoneChanged,
+    confirmingDelete
 }

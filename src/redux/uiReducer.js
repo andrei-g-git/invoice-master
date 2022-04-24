@@ -6,12 +6,14 @@ import {
     STATUS_CHANGED,
     COUNTRY_CHANGED,
     CITY_CHANGED,
-    PHONE_CHANGED
+    PHONE_CHANGED,
+    CONFIRMING_DELETE
 } from "./actionTypes";
 
 const initialState = {
     editorOpen: false,
     invoiceToEdit: 0,
+    deleteConfirmation: false,
     edit: {
         name: "",
         amount: "",
@@ -81,7 +83,12 @@ export const uiReducer = (state = initialState, action) => {
                     ...state.edit,
                     phone: action.payload
                 }
-            }                                                            
+            }    
+        case CONFIRMING_DELETE:
+            return{
+                ...state,
+                deleteConfirmation: action.payload
+            }                                                        
         default:
             return state;
     }
