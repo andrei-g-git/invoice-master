@@ -13,9 +13,7 @@ import {
     phoneChanged 
 } from '../redux/actions';
 import {
-    postInvoice,
-    createRequestObject,
-    getSimpleDate
+    postInvoice
 } from "../js/invoiceEdit";
 import { statuses } from '../js/statuses';
 import DeleteInvoice from './DeleteInvoice';
@@ -49,7 +47,7 @@ export const InvoiceEdit = (props) => {
                 />
 
                 <div className="status-select-wrapper">
-                    <StatusSelect content={ statuses.filter(item => item.sql === content.status)[0].value }
+                    <StatusSelect content={ getDisplayStatus(statuses, content.status) }
                         options={statuses}
                         placeholder="Select completion status"
                         notifyChange={props.handleStatusChange}
@@ -78,6 +76,24 @@ export const InvoiceEdit = (props) => {
             </form>
         </div>
   )
+}
+
+const getDisplayStatus = (statuses, sqlContent) => {
+    const filteredStatuses = statuses.filter(item => item.sql === sqlContent);
+    if(filteredStatuses.length > 0){
+        const statusObject = filteredStatuses[0];
+        return statusObject.value;
+    };
+    return "";
+}
+
+const getSqlStatus = (statuses, optionValue) => {
+    const filteredStatuses = statuses.filter(item => item.value === optionValue);
+    if(filteredStatuses.length > 0){
+        const statusObject = filteredStatuses[0];
+        return statusObject.sql;
+    };
+    return "";
 }
 
 const getInputContentOrBlanks = (invoices, index) => {
@@ -111,17 +127,28 @@ const curryHandleSubmit = (props) => {
 
         event.preventDefault();
 
+        const newestInvoice = props.invoices[props.invoices.length - 1]
+        let order = newestInvoice.ORD_NUM + 1;
+        let customerCode = "";
+        const isNewInvoice = props.index == props.invoices.length;
+        if( ! isNewInvoice){
+            const selectedInvoice = props.invoices[props.index];
+            order = selectedInvoice.ORD_NUM;
+            customerCode = props.invoices[props.index].CUST_CODE;
+        }
         postInvoice(
-            props, 
-            $, 
-            createRequestObject, 
-            getSimpleDate
+            props.changes, 
+            order, 
+            customerCode,
+            isNewInvoice
         );
         
 
         props.toggleEditor(! props.editorOpen);
     }
 }
+
+
 
 const mapStateToProps = (state) => {
 	return {
@@ -144,27 +171,8 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(amountChanged(event.target.value));
         },
         handleStatusChange: (event) => {
-            // const elementValue = event.target.value;
-            // let data = "";
-            // switch(elementValue){
-            //     case "Pending": case "pending": case "PEN":
-            //         data = "PEN";
-            //         break;
-            //     case "Completed": case "completed": case "SOD":
-            //         data = "SOD";
-            //         break;
-            //     case "Overdue": case "overdue": case "OVD":
-            //         data = "OVD";
-            //         break;
-            //     default:
-            //         data = "PEN";
-            //         break;
-            // }
 
-            //this is not functional programing ...
-            const optionValue = event.target.value;
-            const statusObject = statuses.filter(item => /* item.sql */ item.value === optionValue)[0]; //this is pretty bad too, I don't know where I'm passing sql handles and where I' m passing display values...
-            const data = statusObject.sql;
+            const data = getSqlStatus(statuses, event.target.value);
             dispatch(statusChanged(data));
         },
         handleCountryChange: (event) => {
