@@ -71,7 +71,13 @@ export const InvoiceEdit = (props) => {
 
                 <SubmitForm />
 
-                <DeleteInvoice />
+                {
+                    content.amount && content.phone ?
+                            <DeleteInvoice />
+                        : 
+                            null
+                }
+                 
                 
             </form>
         </div>
@@ -143,6 +149,7 @@ const curryHandleSubmit = (props) => {
             isNewInvoice
         );
         
+        //I should use fetchAndLoadState from Invoices.jsx here regardless of success status
 
         props.toggleEditor(! props.editorOpen);
     }

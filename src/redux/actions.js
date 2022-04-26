@@ -64,9 +64,15 @@ function phoneChanged(newValue){
         payload: newValue
     }
 }
-function confirmingDelete(isOpen){
+// function confirmingDelete(isOpen){
+//     return{
+//         type: actionTypes.CONFIRMING_DELETE,
+//         payload: isOpen
+//     }
+// }
+function openingDeleteConfirmation(isOpen){
     return{
-        type: actionTypes.CONFIRMING_DELETE,
+        type: actionTypes.OPENING_DELETE_CONFIRMATION,
         payload: isOpen
     }
 }
@@ -82,5 +88,6 @@ export {
     countryChanged,
     cityChanged,
     phoneChanged,
-    confirmingDelete
+    //confirmingDelete
+    openingDeleteConfirmation
 }

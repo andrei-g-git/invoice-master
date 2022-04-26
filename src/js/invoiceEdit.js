@@ -35,17 +35,6 @@ const postInvoice = (changes, order, customerCode, isNew) => {
     return requestObject; //for testing
 }
 
-
-// const getSimpleDate = () => {
-//     const dateObject = new Date();
-//     const year = dateObject.getUTCFullYear();
-//     const month = dateObject.getUTCMonth() + 1; //starts from 0 
-//     const day = dateObject.getUTCDate(); //date actually gets the day...
-//     const date = year + "-" + month + "-" + day;
-//     console.log(date);
-//     return date;
-// }
-
 export {
     postInvoice
 }

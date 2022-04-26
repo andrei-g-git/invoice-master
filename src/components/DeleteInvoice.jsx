@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
-import { confirmingDelete } from "../redux/actions";
+import { openingDeleteConfirmation } from "../redux/actions";
 
 function DeleteInvoice(props) {
   return (
@@ -43,7 +43,7 @@ const style = {
 const mapDispatchToProps = (dispatch) => {
     return{
         handleDelete: (isOpen) => {
-            dispatch(confirmingDelete(isOpen));
+            dispatch(openingDeleteConfirmation(isOpen));
         }
     }
 }

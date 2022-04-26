@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, Component } from "react";
 import { connect } from "react-redux";
 import { createContext } from "react";
 import * as actions from "../redux/actions";
@@ -8,67 +8,127 @@ import * as actions from "../redux/actions";
 import Delayed from "../components/Delayed";
 import "../css/Invoices.scss";
 
-const $ = require("jquery");
-//const Context = createContext();
+class Invoices extends Component {
+    constructor(props){
+        super(props);
+    }
 
-function Invoices(props) {
+    componentDidMount(){
+        // const $ = require("jquery");
+        // $.ajax({
+        //     url: this.props.path,
+        //     type: "GET",
+        //     success: (response) => {
+        //         this.props.loadInvoices(response);
+        //         this.props.initializeFilteredInvoices(response);
+        //     }
+        // });  
+        
+        fetchAndLoadState(this.props);
 
-    useEffect(() => {
-        $.ajax({
-            url: props.path,
-            type: "GET",
-            success: (response) => {
-                props.loadInvoices(response);
-                props.initializeFilteredInvoices(response);
-            }
-        });
-    }, [props.editorOpen]); //each time editor opens and closes it assumes an invoice was uploaded to the server and updates with new data. I'm only interested in the closed status but I don't know how to filter that
+    }
+    // componentDidUpdate(){
+    //     $.ajax({
+    //         url: this.props.path,
+    //         type: "GET",
+    //         success: (response) => {
+    //             this.props.loadInvoices(response);
+    //             this.props.initializeFilteredInvoices(response);
+    //         }
+    //     });        
+    // }
 
-    return (
-        <div className="invoices-container">
 
-            <props.InvoicesTop invoiceCount={props.filteredInvoices.length} />
+    // useEffect(() => {
+    //     $.ajax({
+    //         url: props.path,
+    //         type: "GET",
+    //         success: (response) => {
+    //             props.loadInvoices(response);
+    //             props.initializeFilteredInvoices(response);
+    //         }
+    //     });
+    // }, [props.editorOpen]); //each time editor opens and closes it assumes an invoice was uploaded to the server and updates with new data. I'm only interested in the closed status but I don't know how to filter that
+    render(){
+        return (
+            <div className="invoices-container">
 
-            <div className="invoices">
+                <this.props.InvoicesTop invoiceCount={this.props.filteredInvoices.length} />
+
+                <div className="invoices">
+                    {
+                        this.props.filteredInvoices.map((invoice, index) => 
+                            <Delayed delay={progressiveDelayRender(
+                                    index,
+                                    this.props.filteredInvoices.length,
+                                    this.props.delayIncrement,
+                                    makeDelayArray
+                                )}
+                            > 
+                                <this.props.Invoice 
+                                    key={invoice.ORD_NUM}
+                                    name={invoice.CUST_NAME} 
+                                    number={invoice.ORD_NUM}
+                                    date={invoice.ORD_DATE}
+                                    amount={invoice.ORD_AMOUNT}
+                                    status={invoice.ORD_DESCRIPTION} 
+                                    index={this.props.filteredInvoices.indexOf(invoice)}
+                                />                            
+                            </Delayed>
+
+                        )
+                    }
+                </div>
+
                 {
-                    props.filteredInvoices.map((invoice, index) => 
-                        <Delayed delay={progressiveDelayRender(
-                                index,
-                                props.filteredInvoices.length,
-                                props.delayIncrement,
-                                makeDelayArray
-                            )}
-                        > 
-                            <props.Invoice 
-                                key={invoice.ORD_NUM}
-                                name={invoice.CUST_NAME} 
-                                number={invoice.ORD_NUM}
-                                date={invoice.ORD_DATE}
-                                amount={invoice.ORD_AMOUNT}
-                                status={invoice.ORD_DESCRIPTION} 
-                                index={props.filteredInvoices.indexOf(invoice)}
-                            />                            
-                        </Delayed>
+                    this.props.editorOpen ?
+                        <this.props.InvoiceEdit />
+                    :
+                        null
+                }
 
-                    )
+                {
+                    this.props.confirmationOpen ? 
+                        <this.props.DeleteConfirmation notifyDelete={this.handleInvoiceDeletion}/>
+                    :
+                        null
                 }
             </div>
+        )
+    }
 
-            {
-                props.editorOpen ?
-                    <props.InvoiceEdit />
-                :
-                    null
-            }
+    handleInvoiceDeletion = () => {
+        const invoiceObject = this.props.invoices[this.props.invoiceToEdit];
+        const order = invoiceObject.ORD_NUM;
+        const $ = require("jquery");
+        $.ajax({
+            type: "POST",
+            url: "/api/invoices/delete",
+            data: {
+                order: order
+            },
+            success: (response => {
+                console.log(response)
+                
+                fetchAndLoadState(this.props)
 
-            {
-                props.deleteConfirmation ?
-                    <props.DeleteConfirmation notifyDelete={props.notAnActualDispatch}/>
-                :
-                    null
-            }
-        </div>
-    )
+            })
+        });
+
+        this.props.toggleEditor(false);
+    }
+}
+
+const fetchAndLoadState = (props) => {
+    const $ = require("jquery");
+    $.ajax({
+        url: props.path,
+        type: "GET",
+        success: (response) => {
+            props.loadInvoices(response);
+            props.initializeFilteredInvoices(response);
+        }
+    }); 
 }
 
 const makeDelayArray = (itemCount, delayIncrement) => {
@@ -89,7 +149,8 @@ const mapStateToProps = (state) => {
         invoices: state.data.abridgedInvoices,
         filteredInvoices: state.data.filteredInvoices,
         editorOpen: state.ui.editorOpen,
-        deleteConfirmation: state.ui.deleteConfirmation,
+        //deleteConfirmation: state.ui.deleteConfirmation,
+        confirmationOpen: state.ui.confirmationOpen,
         invoiceToEdit: state.ui.invoiceToEdit
     }
 }
@@ -102,18 +163,8 @@ const mapDispatchToProps = (dispatch) => {
         initializeFilteredInvoices: (invoices) => {
             dispatch(actions.invoicesFiltered(invoices));
         },
-        notAnActualDispatch: (props) => {
-            const invoiceObject = props.invoices[props.invoiceToEdit];
-            const order = invoiceObject.ORD_NUM;
-            const $ = require("jquery");
-            $.ajax({
-                type: "POST",
-                url: "/api/invoices/delete",
-                data: order,
-                success: (response => {
-                    console.log(response)
-                })
-            })
+        toggleEditor: (isOpen) => {
+            dispatch(actions.editorToggled(isOpen));
         }
     }
 }
