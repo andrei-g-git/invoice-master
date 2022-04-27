@@ -14,41 +14,16 @@ class Invoices extends Component {
     }
 
     componentDidMount(){
-        // const $ = require("jquery");
-        // $.ajax({
-        //     url: this.props.path,
-        //     type: "GET",
-        //     success: (response) => {
-        //         this.props.loadInvoices(response);
-        //         this.props.initializeFilteredInvoices(response);
-        //     }
-        // });  
-        
         fetchAndLoadState(this.props);
 
     }
-    // componentDidUpdate(){
-    //     $.ajax({
-    //         url: this.props.path,
-    //         type: "GET",
-    //         success: (response) => {
-    //             this.props.loadInvoices(response);
-    //             this.props.initializeFilteredInvoices(response);
-    //         }
-    //     });        
-    // }
 
+    getSnapshotBeforeUpdate(prevProps){
+        if(prevProps.editorOpen !== this.props.editorOpen){
+            fetchAndLoadState(this.props); //this is async so it won't be ready before the update happens (luckily it updates again after that ... as it does ...)
+        }
+    }
 
-    // useEffect(() => {
-    //     $.ajax({
-    //         url: props.path,
-    //         type: "GET",
-    //         success: (response) => {
-    //             props.loadInvoices(response);
-    //             props.initializeFilteredInvoices(response);
-    //         }
-    //     });
-    // }, [props.editorOpen]); //each time editor opens and closes it assumes an invoice was uploaded to the server and updates with new data. I'm only interested in the closed status but I don't know how to filter that
     render(){
         return (
             <div className="invoices-container">
@@ -109,7 +84,7 @@ class Invoices extends Component {
             },
             success: (response => {
                 console.log(response)
-                
+
                 fetchAndLoadState(this.props)
 
             })
