@@ -77,6 +77,13 @@ function openingDeleteConfirmation(isOpen){
     }
 }
 
+function anonymousFinancesLoaded(data){
+    return{
+        type: actionTypes.ANONYMOUS_FINANCES_LOADED,
+        payload: data
+    }
+}
+
 export {
     abridgedInvoicesLoaded,
     invoicesFiltered,
@@ -89,5 +96,6 @@ export {
     cityChanged,
     phoneChanged,
     //confirmingDelete
-    openingDeleteConfirmation
+    openingDeleteConfirmation,
+    anonymousFinancesLoaded
 }

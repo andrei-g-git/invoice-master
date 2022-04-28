@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom"; //Switch is now Routes. Fuck whoever keeps changing shit for no reason
 import NavBar from "./NavBar";
 import Invoices from "../pages/Invoices";
+import AnonStatistics from "../pages/AnonStatistics";
 import "../css/Main.scss";
 
 //compose nested components
@@ -27,6 +28,12 @@ function Main(props) {
 							DeleteConfirmation={DeleteConfirmation}
 						/>
 					} //fuck whoever is changing all this shit
+				/>
+
+				<Route path="/anon-stats"
+					element={
+						<AnonStatistics />
+					}
 				/>
 
 			</Routes>
