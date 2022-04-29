@@ -1,24 +1,29 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { openingDeleteConfirmation } from '../redux/actions';
+import "../css/DeleteConfirmation.scss";
 
 export const DeleteConfirmation = (props) => {
   return (
-    <div style={{backgroundColor: "red", height: 300, zIndex: 9999, position: "fixed", top: "50%", left: "50%"}}>
-        <div style={{color: "white"}}>Are you sure you want to delete this invoice?</div>
-        <button
-            onClick={() => {
-                props.notifyDelete(); 
-                props.handleClose()
-            }}
-        >
-            Yes
-        </button>
-        <button style={{color: "white"}}
-            onClick={() => props.handleClose(false)}
-        >
-            Cancel
-        </button>
+    <div className="delete-confirmation-container">
+        <div className="delete-confirmation">
+            <div className="delete-question">
+                Are you sure you want to delete this invoice?
+            </div>
+            <button className="delete-yes"
+                onClick={() => {
+                    props.notifyDelete(); 
+                    props.handleClose();
+                }}
+            >
+                Yes
+            </button>
+            <button className="delete-no"
+                onClick={() => props.handleClose(false)}
+            >
+                Cancel
+            </button>
+        </div>
     </div>
   )
 }

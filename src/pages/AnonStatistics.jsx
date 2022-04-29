@@ -20,6 +20,9 @@ export const AnonStatistics = (props) => {
 		})
 	}, []);
 
+	// let locOrientation = window.screen.lockOrientation || window.screen.mozLockOrientation || window.screen.msLockOrientation || window.screen.orientation.lock;
+	// locOrientation('landscape');
+
 	return (
 		<div style={{backgroundColor: "teal"}}>
 			<Bar data={{
@@ -27,7 +30,8 @@ export const AnonStatistics = (props) => {
 					datasets: props.monthlyOrders.length  ?  props.monthlyOrders  :  [{label: "loading", data: [-1, -1, -1]}]
 				}}
 				options={{
-					maintainAspectRatio: false
+					responsive: true,
+					aspectRatio: 2
 				}}
 			/>
 		</div>
