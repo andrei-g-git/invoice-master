@@ -84,6 +84,13 @@ function anonymousFinancesLoaded(data){
     }
 }
 
+function openingNavMenu(isOpen){
+    return{
+        type: actionTypes.OPENING_NAV_MENU,
+        payload: isOpen
+    }
+}
+
 export {
     abridgedInvoicesLoaded,
     invoicesFiltered,
@@ -97,5 +104,6 @@ export {
     phoneChanged,
     //confirmingDelete
     openingDeleteConfirmation,
-    anonymousFinancesLoaded
+    anonymousFinancesLoaded,
+    openingNavMenu
 }

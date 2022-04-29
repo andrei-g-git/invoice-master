@@ -8,11 +8,13 @@ import {
     CITY_CHANGED,
     PHONE_CHANGED,
     //CONFIRMING_DELETE,
-    OPENING_DELETE_CONFIRMATION
+    OPENING_DELETE_CONFIRMATION,
+    OPENING_NAV_MENU
 } from "./actionTypes";
 
 const initialState = {
     editorOpen: false,
+    navMenuOpen: false,
     invoiceToEdit: 0,
     //deleteConfirmation: false,
     confirmationOpen: false,
@@ -95,7 +97,12 @@ export const uiReducer = (state = initialState, action) => {
             return{
                 ...state,
                 confirmationOpen: action.payload
-            }                                                           
+            } 
+        case OPENING_NAV_MENU:
+            return{
+                ...state,
+                navMenuOpen: action.payload
+            }                                                         
         default:
             return state;
     }

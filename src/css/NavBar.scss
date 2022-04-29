@@ -1,11 +1,12 @@
 @import "Variables";
+@import "Mixins";
 
-@mixin navbarImage($url){
+@mixin navbarImage($url){ //should be in Mixins.scss
     background-image: url($url);
     height: 4rem;
     background-repeat: no-repeat;
     background-size: contain;
-    position: relative;
+    position: relative; //this works in centering the items sideways but I can't rememeber why...
     //top: 2rem;
     left: ($nav-bar-width-desktop - $logo-width-desktop) / 2; 
     @media(max-width: map-get($breakpoints, "tablet")){
@@ -24,10 +25,10 @@
     width: $nav-bar-width-desktop;//15rem;
     height: 100vh;
     background-color: #252945;
-    border: solid 1px red;
+    //border: solid 1px red;
     left: 0;
 
-    color: pink;
+    //color: pink;
 
     @media(max-width: map-get($breakpoints, "tablet")){
         flex-direction: row;
@@ -36,26 +37,55 @@
         top: 0;
     }
 
+    .hamburger{
+        @include navbarImage("../assets/hamburger-white.png");
+
+        display: none;
+
+        @media(max-width: map-get($breakpoints, "tablet")){
+            display: block;
+            position: absolute;
+            left: 1rem;
+            //transform: translateX(-50%);
+        }
+    }
+
     .logo{
-        // background-image: url("../assets/bird-white-small1.png");
-        // height: 4rem;
-        // background-repeat: no-repeat;
-        // background-size: contain;
-        // position: relative;
-        // top: 2rem;
-        // left: ($nav-bar-width-desktop - $logo-width-desktop) / 2; 
-        // @media(max-width: map-get($breakpoints, "tablet")){
-        //     width: $logo-width-mobile;
-        //     top: ($nav-bar-height-tablet - $logo-height-mobile) / 2;
-        //     left: 0.2rem;
-        // }
 
         @include navbarImage("../assets/bird-white-small1.png");
         top: 2rem;
+
+        @media(max-width: map-get($breakpoints, "tablet")){
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
     }
 
     .avatar{
         @include navbarImage("../assets/user-avatar.png");
         bottom: 2rem;
+    }
+
+    .link-container{
+        @include absolutePosition(30%, 50%);
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .link{
+            text-decoration: none;
+            color: $text-color-primary-light;
+            padding-top: 1rem;
+            @media(max-width: map-get($breakpoints, "tablet")){
+                display: none;
+            }
+        }
+
+        // @media(max-width: map-get($breakpoints, "tablet")){
+        //     flex-direction: row;
+        //     padding-top: 0;
+        // }
     }
 }

@@ -1,0 +1,23 @@
+@import "Variables";
+@import "Mixins";
+
+.hamburger-menu-container{
+    @include modalContainer(rgba(1, 1, 1, 0.8));
+
+    z-index: 9999;
+
+    .hamburger-menu{
+        @include absolutePosition(0, 0);
+        width: 100vh;
+        height: 80vh;
+        background-color: green;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+
+        z-index: 99999;
+
+        color: white;
+    }
+}
