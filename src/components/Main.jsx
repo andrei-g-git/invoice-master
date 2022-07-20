@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom"; //Switch is now Routes. Fuck whoever keeps changing shit for no reason
+import { Routes, Route } from "react-router-dom"; 
 import NavBar from "./NavBar";
 import Invoices from "../pages/Invoices";
 import AnonStatistics from "../pages/AnonStatistics";
@@ -27,7 +27,7 @@ function Main(props) {
 							InvoiceEdit={InvoiceEdit }
 							DeleteConfirmation={DeleteConfirmation}
 						/>
-					} //fuck whoever is changing all this shit
+					} 
 				/>
 
 				<Route path="/anon-stats"
