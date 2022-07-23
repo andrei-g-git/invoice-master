@@ -1,81 +1,130 @@
-import React, { useEffect, Component } from "react";
+import React, { useEffect/* , Component  */} from "react";
 import { connect } from "react-redux";
-import { createContext } from "react";
 import * as actions from "../redux/actions";
-// import Invoice from "../components/Invoice";  //these are now props
-// import InvoicesTop from "../components/InvoicesTop";
-// import InvoiceEdit from "../components/InvoiceEdit"; 
 import Delayed from "../components/Delayed";
 import "../css/Invoices.scss";
 
-class Invoices extends Component {
-    constructor(props){
-        super(props);
-    }
+// class Invoices extends Component {
+//     constructor(props){
+//         super(props);
+//     }
 
-    componentDidMount(){
-        fetchAndLoadState(this.props);
+//     componentDidMount(){
+//         fetchAndLoadState(this.props);
 
-    }
+//     }
 
-    getSnapshotBeforeUpdate(prevProps){
-        if(prevProps.editorOpen !== this.props.editorOpen){
-            fetchAndLoadState(this.props); //this is async so it won't be ready before the update happens (luckily it updates again after that ... as it does ...)
-        }
-    }
+//     getSnapshotBeforeUpdate(prevProps){
+//         if(prevProps.editorOpen !== this.props.editorOpen){
+//             fetchAndLoadState(this.props); //this is async so it won't be ready before the update happens (luckily it updates again after that ... as it does ...)
+//         }
+//     }
 
-    render(){
-        return (
-            <div className="invoices-container">
+    //render(){
+function Invoices(props){
 
-                <this.props.InvoicesTop invoiceCount={this.props.filteredInvoices.length} />
+    useEffect(() => {
+        fetchAndLoadState(props);
+    },
+        []
+    );
 
-                <div className="invoices">
-                    {
-                        this.props.filteredInvoices.map((invoice, index) => 
-                            <Delayed delay={progressiveDelayRender(
-                                    index,
-                                    this.props.filteredInvoices.length,
-                                    this.props.delayIncrement,
-                                    makeDelayArray
-                                )}
-                            > 
-                                <this.props.Invoice 
-                                    key={invoice.ORD_NUM}
-                                    name={invoice.CUST_NAME} 
-                                    number={invoice.ORD_NUM}
-                                    date={invoice.ORD_DATE}
-                                    amount={invoice.ORD_AMOUNT}
-                                    status={invoice.ORD_DESCRIPTION} 
-                                    index={this.props.filteredInvoices.indexOf(invoice)}
-                                />                            
-                            </Delayed>
+    return (
+        <div className="invoices-container">
 
-                        )
-                    }
-                </div>
+            {/* <this.props.InvoicesTop invoiceCount={this.props.filteredInvoices.length} /> */}
+            <props.InvoicesTop invoiceCount={props.filteredInvoices.length} />
 
+            <div className="invoices">
                 {
-                    this.props.editorOpen ?
-                        <this.props.InvoiceEdit />
-                    :
-                        null
-                }
+                    //this.props.filteredInvoices.map((invoice, index) => 
+                    props.filteredInvoices.map((invoice, index) => 
+                        <Delayed delay={progressiveDelayRender(
+                                index,
+                                /* this. */props.filteredInvoices.length,
+                                /* this. */props.delayIncrement,
+                                makeDelayArray
+                            )}
+                            key={invoice.ORD_NUM}
+                        > 
+                            {/* <this.props.Invoice */} 
+                            <props.Invoice
+                                key={invoice.ORD_NUM}
+                                name={invoice.CUST_NAME} 
+                                number={invoice.ORD_NUM}
+                                date={invoice.ORD_DATE}
+                                amount={invoice.ORD_AMOUNT}
+                                status={invoice.ORD_DESCRIPTION} 
+                                index={/* this. */props.filteredInvoices.indexOf(invoice)}
+                            />                            
+                        </Delayed>
 
-                {
-                    this.props.confirmationOpen ? 
-                        <this.props.DeleteConfirmation notifyDelete={this.handleInvoiceDeletion}/>
-                    :
-                        null
+                    )
                 }
             </div>
-        )
-    }
 
-    handleInvoiceDeletion = () => {
-        const invoiceObject = this.props.invoices[this.props.invoiceToEdit];
-        const order = invoiceObject.ORD_NUM;
-        const $ = require("jquery");
+            {
+                /* this. */props.editorOpen ?
+                    //<{/* this. */}props.InvoiceEdit />
+                    <props.InvoiceEdit />
+                :
+                    null
+            }
+
+            {
+                /* this. */props.confirmationOpen ? 
+                    //</* this. */props.DeleteConfirmation notifyDelete={/* this. */handleInvoiceDeletion}/>
+                    //<{/* this. */}props.DeleteConfirmation notifyDelete={this.curryHandleInvoiceDeletion(
+                    <props.DeleteConfirmation notifyDelete={curryHandleInvoiceDeletion(
+                            /* this. */props.invoices,
+                            /* this. */props.invoiceToEdit,
+                            "ORD_NUM",
+                            /* this. */fetchAndLoadState,
+                            /* this. */props,
+                            /* this. */props.toggleEditor                                
+                        )}
+                    />
+                :
+                    null
+            }
+        </div>
+    )
+    //}
+}
+
+const handleInvoiceDeletion = () => {
+    const invoiceObject = this.props.invoices[this.props.invoiceToEdit];
+    const order = invoiceObject.ORD_NUM;
+    const $ = require("jquery");
+    $.ajax({
+        type: "POST",
+        url: "/api/invoices/delete",
+        data: {
+            order: order
+        },
+        success: (response => {
+            console.log(response)
+
+            fetchAndLoadState(this.props)
+
+        })
+    });
+
+    this.props.toggleEditor(false);
+}
+
+const curryHandleInvoiceDeletion = (
+    invoices,
+    invoiceToEdit,
+    orderPropertyName,
+    fetchAndLoadState,
+    props,
+    toggleEditor
+) => {
+    return () => {
+        const invoiceObject = invoices[invoiceToEdit];
+        const order = invoiceObject[orderPropertyName];//.ORD_NUM;
+        const $ = require("jquery");   
         $.ajax({
             type: "POST",
             url: "/api/invoices/delete",
@@ -85,14 +134,15 @@ class Invoices extends Component {
             success: (response => {
                 console.log(response)
 
-                fetchAndLoadState(this.props)
+                fetchAndLoadState(props)
 
             })
         });
 
-        this.props.toggleEditor(false);
+        toggleEditor(false);                     
     }
 }
+
 
 const fetchAndLoadState = (props) => {
     const $ = require("jquery");
